@@ -219,21 +219,21 @@ async function initMap() {
   const marker_1 = new Marker({
     map: map,
     position: position_1,
-    icon: "../images/map-marker.png",
+    icon: "/images/map-marker.png",
     title: "London",
   });
   // The marker, positioned at Istanbul
   const marker_2 = new Marker({
     map: map,
     position: position_2,
-    icon: "../images/map-marker.png",
+    icon: "/images/map-marker.png",
     title: "Istanbul",
   });
   // The marker, positioned at New York
   const marker_3 = new Marker({
     map: map,
     position: position_3,
-    icon: "../images/map-marker.png",
+    icon: "/images/map-marker.png",
     title: "New York",
   });
 
