@@ -476,7 +476,7 @@ function set_default_product_profit( $order_id ) {
   $items = $order->get_items();
 
   // Loop through order items
-  foreach ( $items as $item_id => $item ) { 
+  foreach ( $items as $item_id => $item ) {  
       // Update product_profit field with default value (20)
       $product_id = $item->get_product_id();
       // $product_profit = 20; // Your default value
@@ -493,16 +493,20 @@ function set_default_product_profit( $order_id ) {
 
       // Calculate profit
       $product_profit = $price_to_use - $purchase_price;
-
+      $number_of_items_ordered = $item->get_quantity();
       
+
       // You need to adapt this part based on your database structure.
       // Here I'm assuming direct SQL query to update the product_profit field.
       global $wpdb;
       $wpdb->update(
           $wpdb->prefix . 'woocommerce_order_items',
-          array( 'product_profit' => $product_profit ),
+          array(
+            'product_profit' => $product_profit ,
+            'quantity_orderd' => $number_of_items_ordered 
+          ),
           array( 'order_item_id' => $item_id ),
-          array( '%d' ),
+          array( '%d' ,'%d' ),
           array( '%d' )
       );
   }
@@ -512,6 +516,19 @@ function set_default_product_profit( $order_id ) {
 add_action( 'woocommerce_new_order', 'set_default_product_profit' );
 
 
+
+
+function show_ordered_detailsssss(){
+  $order_id = 223; 
+  $order = wc_get_order( $order_id );
+  $items = $order->get_items(); 
+
+  echo '<pre>' ;
+  print_r($items[206]) ;
+  
+}
+
+add_action('wp_footer','show_ordered_detailsssss') ; 
 // // Hook into WooCommerce new order event
 // // add_action( 'woocommerce_admin_order_actions_end', 'calculate_and_store_profit_manual_on_backend' );
 // add_action( 'woocommerce_new_order', 'calculate_and_store_profit_manual', 10, 1 );

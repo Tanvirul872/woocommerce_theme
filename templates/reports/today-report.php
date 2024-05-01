@@ -52,9 +52,17 @@
 </div>
 
 
+<?php 
+
+// echo '<pre>' ; 
+// print_r($total_sold_amount) ; 
+?>
+
 <div class="report_div">
     <div class="report_items">
-        <a href="#">Sale Amount</a>
+        <a href="#">  Sale Amount <br> 
+          
+       </a>
     </div>
     <div class="report_items">
         <a href="#">Purchase Cost</a>

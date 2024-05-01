@@ -763,32 +763,32 @@ add_action('admin_menu', 'add_damage_menu');
 
 
 
-// Add return menu to the dashboard
-function add_customer_menu()
-{
+// // Add return menu to the dashboard
+// function add_customer_menu()
+// {
 
-    // Add Customers Menu
-    add_menu_page(
-        'Customers',        // Page title
-        'Customers',        // Menu title
-        'manage_options',   // Capability required to access the menu
-        'customers_page',   // Menu slug
-        'customers_page_content', // Callback function to display page content
-        'dashicons-groups', // Icon for the menu (optional)
-        24                // Menu position (adjust as needed)
-    );
+//     // Add Customers Menu
+//     add_menu_page(
+//         'Customers',        // Page title
+//         'Customers',        // Menu title
+//         'manage_options',   // Capability required to access the menu
+//         'customers_page',   // Menu slug
+//         'customers_page_content', // Callback function to display page content
+//         'dashicons-groups', // Icon for the menu (optional)
+//         24                // Menu position (adjust as needed)
+//     );
 
-    // Add submenu
-    add_submenu_page(
-        'customers_page',     // Parent menu slug
-        'Add New Customer',   // Page title
-        'Add New Customer',   // Menu title
-        'manage_options',   // Capability required to access the submenu
-        'add_new_customer',   // Submenu slug
-        'add_new_customer_content' // Callback function to display submenu content
-    );
-}
-add_action('admin_menu', 'add_customer_menu');
+//     // Add submenu
+//     add_submenu_page(
+//         'customers_page',     // Parent menu slug
+//         'Add New Customer',   // Page title
+//         'Add New Customer',   // Menu title
+//         'manage_options',   // Capability required to access the submenu
+//         'add_new_customer',   // Submenu slug
+//         'add_new_customer_content' // Callback function to display submenu content
+//     );
+// }
+// add_action('admin_menu', 'add_customer_menu');
 
 
 
