@@ -3,119 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-    <style>
-        /* Add your custom styles here */
+<style>
+    /* Add your custom styles here */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th,
+    td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .admin_stock_page img {
+        height: 50px;
+        width: 50px;
+    }
+
+    @media screen and (max-width: 600px) {
         table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
+            border: 1px solid #ddd;
         }
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
+        th,
+        td {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         th {
-            background-color: #f2f2f2;
+            text-align: left;
         }
-
-        .admin_stock_page img{
-            height:50px;
-            width:50px; 
-        }
-
-        @media screen and (max-width: 600px) {
-            table {
-                border: 1px solid #ddd;
-            }
-
-            th, td {
-                display: block;
-                width: 100%;
-                box-sizing: border-box;
-            }
-
-            th {
-                text-align: left;
-            }
-        }
-    </style>
+    }
+</style>
 <!-- </head>
 <body> -->
 
 <h2>Purchase Information</h2>
-
 <table class="admin_stock_page">
     <thead>
         <tr>
             <th>No</th>
-            <th>Bill no</th>
-            <th>Supplier</th>
-            <th>Purchase Date</th>
-            <th>Items</th>
-            <th>Payable</th>
-            <th>Paid</th>
-            <th>Due</th>
-            <th>Action</th>
-            
+            <th> Product Name </th>
+            <th>quantity</th>
+            <th>rate</th>
+            <th>Subtotal</th>
+       
         </tr>
     </thead>
     <tbody>
         <!-- Add your table data here -->
-        <tr>
-            <td>1</td>
-            <td>Product 1</td>
-            <td>Category A</td>
-            <td>$19.99</td>
-            <td>100</td>
-            <td>50</td>
-            <td>5</td>
-            <td>2</td>
-            <td>43</td>
-        </tr>
 
-        <tr>
-            <td>1</td>
-            <td>Product 1</td>
-            <td>Category A</td>
-            <td>$19.99</td>
-            <td>100</td>
-            <td>50</td>
-            <td>5</td>
-            <td>2</td>
-            <td>43</td>
-        </tr>
+        <?php 
 
-        <tr>
-            <td>1</td>
-            <td>Product 1</td>
-            <td>Category A</td>
-            <td>$19.99</td>
-            <td>100</td>
-            <td>50</td>
-            <td>5</td>
-            <td>2</td>
-            <td>43</td>
-        </tr>
+            global $wpdb;
+            $table_name = $wpdb->prefix . 'product_purchase'; // Assuming the table name is wp_product_purchase
+            $query = "SELECT * FROM $table_name";
+            $results = $wpdb->get_results($query);
+// echo '<pre>' ;
+// print_r($results) ; 
+foreach ($results as $result){ 
+    $product = wc_get_product($result->product_id);
 
-        <tr>
-            <td>1</td>
-            <td>Product 1</td>
-            <td>Category A</td>
-            <td>$19.99</td>
-            <td>100</td>
-            <td>50</td>
-            <td>5</td>
-            <td>2</td>
-            <td>43</td>
-        </tr>
+    ?>
 
+<tr>
+    <td> <?php echo $result->id ; ?> </td>
+    <td> <?php echo $product->get_name() ; ?> </td>
+    <td> <?php echo $result->quantity ; ?></td>
+    <td> <?php echo $result->rate ; ?></td>
+    <td> <?php echo $result->subtotal ; ?></td>
+</tr>
 
-    
+<?php } ?>
+      
 
       
+
+
+
+
         <!-- Add more rows as needed -->
     </tbody>
 </table>

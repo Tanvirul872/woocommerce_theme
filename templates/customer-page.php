@@ -3,45 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-    <style>
-        /* Add your custom styles here */
+<style>
+    /* Add your custom styles here */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th,
+    td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .admin_stock_page img {
+        height: 50px;
+        width: 50px;
+    }
+
+    @media screen and (max-width: 600px) {
         table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
+            border: 1px solid #ddd;
         }
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
+        th,
+        td {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         th {
-            background-color: #f2f2f2;
+            text-align: left;
         }
-
-        .admin_stock_page img{
-            height:50px;
-            width:50px; 
-        }
-
-        @media screen and (max-width: 600px) {
-            table {
-                border: 1px solid #ddd;
-            }
-
-            th, td {
-                display: block;
-                width: 100%;
-                box-sizing: border-box;
-            }
-
-            th {
-                text-align: left;
-            }
-        }
-    </style>
+    }
+</style>
 <!-- </head>
 <body> -->
 
@@ -51,92 +53,50 @@
     <thead>
         <tr>
             <th>No</th>
-            <th>Image</th>
-            <th>Product Name</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Purchased</th>
-            <th>Sold</th>
-            <th>Damage</th>
-            <th>Returned</th>
-            <th>Available Stock</th>
-            <th>Sell Value</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Receivale</th>
+            <th>Paid</th>
+            <th>Sale Due</th>
+            <th>Personal Balance</th>
+            <th>Total Due</th>
         </tr>
     </thead>
     <tbody>
-        <!-- Add your table data here -->
-        <tr>
-            <td>1</td>
-            <td><img src="http://localhost/ecommerce_theme/wp-content/uploads/2023/12/product_2.jpg" alt="Product Image"></td>
-            <td>Product 1</td>
-            <td>Category A</td>
-            <td>$19.99</td>
-            <td>100</td>
-            <td>50</td>
-            <td>5</td>
-            <td>2</td>
-            <td>43</td>
-            <td>$999.50</td>
-        </tr>
 
-        <tr>
-            <td>1</td>
-            <td><img src="http://localhost/ecommerce_theme/wp-content/uploads/2023/12/product_2.jpg" alt="Product Image"></td>
-            <td>Product 1</td>
-            <td>Category A</td>
-            <td>$19.99</td>
-            <td>100</td>
-            <td>50</td>
-            <td>5</td>
-            <td>2</td>
-            <td>43</td>
-            <td>$999.50</td>
-        </tr>
 
-        <tr>
-            <td>1</td>
-            <td><img src="http://localhost/ecommerce_theme/wp-content/uploads/2023/12/product_2.jpg" alt="Product Image"></td>
-            <td>Product 1</td>
-            <td>Category A</td>
-            <td>$19.99</td>
-            <td>100</td>
-            <td>50</td>
-            <td>5</td>
-            <td>2</td>
-            <td>43</td>
-            <td>$999.50</td>
-        </tr>
+        <?php
+        $customers = get_users(array(
+            'role'    => 'customer',
+            'orderby' => 'user_registered',
+            'order'   => 'DESC',
+        ));
 
-        <tr>
-            <td>1</td>
-            <td><img src="http://localhost/ecommerce_theme/wp-content/uploads/2023/12/product_2.jpg" alt="Product Image"></td>
-            <td>Product 1</td>
-            <td>Category A</td>
-            <td>$19.99</td>
-            <td>100</td>
-            <td>50</td>
-            <td>5</td>
-            <td>2</td>
-            <td>43</td>
-            <td>$999.50</td>
-        </tr>
+        $counter = 0;
+        foreach ($customers as $customer) {
+            $customer_data = get_userdata($customer->ID);
+            $counter++;
+        ?>
+            <tr>
+                <td><?php echo $counter; ?></td>
+                <td><?php echo $customer_data->display_name; ?></td>
+                <td><?php echo $customer_data->user_email; ?></td>
+                <td>01960844035</td>
+                <td>Bibir-Bagicha, Jatrabari</td>
+                <td>6,000 Tk</td>
+                <td>50 Tk</td>
+                <td>5975 Tk</td>
+                <td>11,000 <p>** কাস্টমারের টাকা আপনার কাছে জমা আছে</p>
+                </td>
+                <td>5,975 Tk</td>
+            </tr>
+        <?php
+        }
+        ?>
 
-        <tr>
-            <td>1</td>
-            <td><img src="http://localhost/ecommerce_theme/wp-content/uploads/2023/12/product_2.jpg" alt="Product Image"></td>
-            <td>Product 1</td>
-            <td>Category A</td>
-            <td>$19.99</td>
-            <td>100</td>
-            <td>50</td>
-            <td>5</td>
-            <td>2</td>
-            <td>43</td>
-            <td>$999.50</td>
-        </tr>
-        <!-- Add more rows as needed -->
+
+
     </tbody>
 </table>
-<!-- 
-</body>
-</html> -->

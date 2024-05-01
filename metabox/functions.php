@@ -4,63 +4,63 @@
 
 function metabox_for_expense(array $product_meta)
 {
- 
-    
-  // home blog section 
-  $product_meta[] = array(
-
-    'id' => 'post-expense',
-    'title' => 'Add Expense',
-    'object_types' => array('expense'),
-    'fields' => array( 
-
-        array(
-            'id' => 'expense-amount',
-            'name' => ' Expense Amount:',
-            'desc' => ' Expense Amount',
-            'type' => 'text',
-        ),   
-
-        array(
-            'id' => 'expense-title',
-            'name' => 'Expense Name:',
-            'desc' => 'Write Expense Name',
-            'type' => 'text',
-        ),   
-        
-        array(
-            'id' => 'expense-date',
-            'name' => 'Expense Date',
-            'desc' => 'Write Expense Date',
-            'type' => 'text_date',
-        ),   
-
-        array(
-            'id'      => 'expense-category',
-            'name'    => 'Expense Category',
-            'desc'    => 'Select Expense Category',
-            'type'    => 'taxonomy_select',
-            'taxonomy' => 'expense_category', // Specify the custom taxonomy
-        ), 
-        
-
-        array(
-            'id'      => 'expense-note',
-            'type'    => 'textarea',
-            'name'    => 'Expense Note',
-            'desc'    => 'Select Expense Category',
-
-           
-        ), 
-        
-        
-        
 
 
-    )
-);
+    // home blog section 
+    $product_meta[] = array(
 
-return $product_meta;
+        'id' => 'post-expense',
+        'title' => 'Add Expense',
+        'object_types' => array('expense'),
+        'fields' => array(
+
+            array(
+                'id' => 'expense-amount',
+                'name' => ' Expense Amount:',
+                'desc' => ' Expense Amount',
+                'type' => 'text',
+            ),
+
+            array(
+                'id' => 'expense-title',
+                'name' => 'Expense Name:',
+                'desc' => 'Write Expense Name',
+                'type' => 'text',
+            ),
+
+            array(
+                'id' => 'expense-date',
+                'name' => 'Expense Date',
+                'desc' => 'Write Expense Date',
+                'type' => 'text_date',
+            ),
+
+            array(
+                'id'      => 'expense-category',
+                'name'    => 'Expense Category',
+                'desc'    => 'Select Expense Category',
+                'type'    => 'taxonomy_select',
+                'taxonomy' => 'expense_category', // Specify the custom taxonomy
+            ),
+
+
+            array(
+                'id'      => 'expense-note',
+                'type'    => 'textarea',
+                'name'    => 'Expense Note',
+                'desc'    => 'Select Expense Category',
+
+
+            ),
+
+
+
+
+
+        )
+    );
+
+    return $product_meta;
 }
 
 add_filter('cmb2_meta_boxes', 'metabox_for_expense');
@@ -75,16 +75,16 @@ function metabox_sreview_color(array $taxonomy_meta)
         'title'         => 'Extra Section',
         'object_types'  => array('term'), // Specify 'term' here for taxonomy
         'taxonomies'    => array('pa_color'), // Specify your taxonomy name here
-        'fields'        => array(  
-            array( 
+        'fields'        => array(
+            array(
                 'id'   => 'color-attribute',
                 'name' => 'Select color',
                 'desc' => 'Select the color',
                 'type' => 'colorpicker',
                 'default' => '#ffffff',
 
-    
-            ), 
+
+            ),
 
 
         )
@@ -113,21 +113,21 @@ function metabox_homepage(array $product_meta)
         'show_on' => array(
             'key' => 'page-template',  // This sets the display condition to only show the metabox on pages using the Homepage template
             'value' => 'index.php',  //page file name
-         ),
-        'fields' => array( 
+        ),
+        'fields' => array(
             array(
                 'id' => 'habout-utitle',
                 'name' => 'Upper title',
                 'desc' => 'Write here the title',
                 'type' => 'text',
-            ), 
+            ),
             array(
                 'id' => 'habout-mtitle',
                 'name' => 'Main title',
                 'desc' => 'Write here the main title',
                 'type' => 'textarea',
-            ), 
-            
+            ),
+
             array(
                 'id' => 'habout-desc',
                 'name' => 'Description',
@@ -140,8 +140,8 @@ function metabox_homepage(array $product_meta)
                 'name' => 'Call box title',
                 'desc' => 'Write here the text',
                 'type' => 'text',
-            ), 
-            
+            ),
+
             array(
                 'id' => 'habout-cboxno',
                 'name' => 'Call box number',
@@ -183,8 +183,8 @@ function metabox_homepage(array $product_meta)
         'show_on' => array(
             'key' => 'page-template',  // This sets the display condition to only show the metabox on pages using the Homepage template
             'value' => 'index.php',  //page file name
-         ),
-        'fields' => array( 
+        ),
+        'fields' => array(
 
 
             array(
@@ -192,15 +192,15 @@ function metabox_homepage(array $product_meta)
                 'name' => 'Upper title',
                 'desc' => 'Write here the title',
                 'type' => 'text',
-            ), 
-            
+            ),
+
             array(
                 'id' => 'hservice-mtitle',
                 'name' => 'Main title',
                 'desc' => 'Write here the main title',
                 'type' => 'text',
-            ), 
-         
+            ),
+
 
         )
 
@@ -215,15 +215,15 @@ function metabox_homepage(array $product_meta)
         'show_on' => array(
             'key' => 'page-template',  // This sets the display condition to only show the metabox on pages using the Homepage template
             'value' => 'index.php',  //page file name
-         ),
-        'fields' => array( 
+        ),
+        'fields' => array(
 
             array(
                 'id' => 'hachieve-bg',
                 'name' => 'Background Image',
                 'desc' => 'Upload the image',
                 'type' => 'file',
-            ),  
+            ),
 
         )
 
@@ -239,36 +239,36 @@ function metabox_homepage(array $product_meta)
         'show_on' => array(
             'key' => 'page-template',  // This sets the display condition to only show the metabox on pages using the Homepage template
             'value' => 'index.php',  //page file name
-         ),
-        'fields' => array( 
+        ),
+        'fields' => array(
 
             array(
                 'id' => 'whychs-stitle',
                 'name' => 'Subtitle',
                 'desc' => 'Write here the Subtitle',
                 'type' => 'text',
-            ),  
+            ),
 
             array(
                 'id' => 'whychs-mtitle',
                 'name' => 'Main title',
                 'desc' => 'Write here the Main title',
                 'type' => 'text',
-            ), 
-            
+            ),
+
             array(
                 'id' => 'whychs-limg',
                 'name' => 'Left Side Image',
                 'desc' => 'Upload image here',
                 'type' => 'file',
-            ), 
+            ),
 
         )
 
     );
-    
 
-  // home skill section 
+
+    // home skill section 
     $product_meta[] = array(
 
         'id' => 'home-skillsection',
@@ -277,170 +277,170 @@ function metabox_homepage(array $product_meta)
         'show_on' => array(
             'key' => 'page-template',  // This sets the display condition to only show the metabox on pages using the Homepage template
             'value' => 'index.php',  //page file name
-         ),
-        'fields' => array( 
+        ),
+        'fields' => array(
 
             array(
                 'id' => 'skill-stitle',
                 'name' => 'Subtitle',
                 'desc' => 'Write here the Subtitle',
                 'type' => 'text',
-            ),  
+            ),
 
             array(
                 'id' => 'skill-mtitle',
                 'name' => 'Main title',
                 'desc' => 'Write here the Main title',
                 'type' => 'text',
-            ), 
+            ),
 
             array(
                 'id' => 'skill-desc',
                 'name' => 'Description',
                 'desc' => 'Write here the description',
                 'type' => 'textarea',
-            ), 
-            
-            
+            ),
+
+
             array(
                 'id' => 'skill-img1',
                 'name' => 'Right Side Image 1',
                 'desc' => 'Upload image here',
                 'type' => 'file',
-            ), 
+            ),
 
         )
 
     );
-    
-
-
-    
-  // home blog section 
-  $product_meta[] = array(
-
-    'id' => 'home-blogsection',
-    'title' => 'Blog Section',
-    'object_types' => array('page'),
-    'show_on' => array(
-        'key' => 'page-template',  // This sets the display condition to only show the metabox on pages using the Homepage template
-        'value' => 'index.php',  //page file name
-     ),
-    'fields' => array( 
-
-        array(
-            'id' => 'hblog-stitle',
-            'name' => 'Subtitle',
-            'desc' => 'Write here the Subtitle',
-            'type' => 'text',
-        ),   
-
-        
-        array(
-            'id' => 'hblog-mtitle',
-            'name' => 'Main title',
-            'desc' => 'Write here the Main title',
-            'type' => 'text',
-        ),   
-
-    )
-
-);
-
-    
-  // home consultation section 
-  $product_meta[] = array(
-
-    'id' => 'home-consultsec',
-    'title' => 'Consultation Section',
-    'object_types' => array('page'),
-    'show_on' => array(
-        'key' => 'page-template',  // This sets the display condition to only show the metabox on pages using the Homepage template
-        'value' => 'index.php',  //page file name
-     ),
-    'fields' => array( 
-
-        array(
-            'id' => 'hconsult-stitle',
-            'name' => 'Subtitle',
-            'desc' => 'Write here the Subtitle',
-            'type' => 'text',
-        ),   
-
-        
-        array(
-            'id' => 'hconsult-mtitle',
-            'name' => 'Main title',
-            'desc' => 'Write here the Main title',
-            'type' => 'text',
-        ), 
-        
-        array(
-            'id' => 'hconsult-link',
-            'name' => 'Button Link',
-            'desc' => 'Write here the link url',
-            'type' => 'text',
-        ),   
-
-
-        array(
-            'id' => 'hconsult-bgimg',
-            'name' => 'Image',
-            'desc' => 'Upload the image',
-            'type' => 'file',
-        ),  
-
-    )
-
-);
 
 
 
-// home consultation section 
-  $product_meta[] = array(
 
-    'id' => 'home-consultsec',
-    'title' => 'Consultation Section',
-    'object_types' => array('page'),
-    'show_on' => array(
-        'key' => 'page-template',  // This sets the display condition to only show the metabox on pages using the Homepage template
-        'value' => 'index.php',  //page file name
-     ),
-    'fields' => array( 
+    // home blog section 
+    $product_meta[] = array(
 
-        array(
-            'id' => 'hconsult-stitle',
-            'name' => 'Subtitle',
-            'desc' => 'Write here the Subtitle',
-            'type' => 'text',
-        ),   
+        'id' => 'home-blogsection',
+        'title' => 'Blog Section',
+        'object_types' => array('page'),
+        'show_on' => array(
+            'key' => 'page-template',  // This sets the display condition to only show the metabox on pages using the Homepage template
+            'value' => 'index.php',  //page file name
+        ),
+        'fields' => array(
 
-        
-        array(
-            'id' => 'hconsult-mtitle',
-            'name' => 'Main title',
-            'desc' => 'Write here the Main title',
-            'type' => 'text',
-        ), 
-        
-        array(
-            'id' => 'hconsult-link',
-            'name' => 'Button Link',
-            'desc' => 'Write here the link url',
-            'type' => 'text',
-        ),   
+            array(
+                'id' => 'hblog-stitle',
+                'name' => 'Subtitle',
+                'desc' => 'Write here the Subtitle',
+                'type' => 'text',
+            ),
 
 
-        array(
-            'id' => 'hconsult-bgimg',
-            'name' => 'Image',
-            'desc' => 'Upload the image',
-            'type' => 'file',
-        ),  
+            array(
+                'id' => 'hblog-mtitle',
+                'name' => 'Main title',
+                'desc' => 'Write here the Main title',
+                'type' => 'text',
+            ),
 
-    )
+        )
 
-);
+    );
+
+
+    // home consultation section 
+    $product_meta[] = array(
+
+        'id' => 'home-consultsec',
+        'title' => 'Consultation Section',
+        'object_types' => array('page'),
+        'show_on' => array(
+            'key' => 'page-template',  // This sets the display condition to only show the metabox on pages using the Homepage template
+            'value' => 'index.php',  //page file name
+        ),
+        'fields' => array(
+
+            array(
+                'id' => 'hconsult-stitle',
+                'name' => 'Subtitle',
+                'desc' => 'Write here the Subtitle',
+                'type' => 'text',
+            ),
+
+
+            array(
+                'id' => 'hconsult-mtitle',
+                'name' => 'Main title',
+                'desc' => 'Write here the Main title',
+                'type' => 'text',
+            ),
+
+            array(
+                'id' => 'hconsult-link',
+                'name' => 'Button Link',
+                'desc' => 'Write here the link url',
+                'type' => 'text',
+            ),
+
+
+            array(
+                'id' => 'hconsult-bgimg',
+                'name' => 'Image',
+                'desc' => 'Upload the image',
+                'type' => 'file',
+            ),
+
+        )
+
+    );
+
+
+
+    // home consultation section 
+    $product_meta[] = array(
+
+        'id' => 'home-consultsec',
+        'title' => 'Consultation Section',
+        'object_types' => array('page'),
+        'show_on' => array(
+            'key' => 'page-template',  // This sets the display condition to only show the metabox on pages using the Homepage template
+            'value' => 'index.php',  //page file name
+        ),
+        'fields' => array(
+
+            array(
+                'id' => 'hconsult-stitle',
+                'name' => 'Subtitle',
+                'desc' => 'Write here the Subtitle',
+                'type' => 'text',
+            ),
+
+
+            array(
+                'id' => 'hconsult-mtitle',
+                'name' => 'Main title',
+                'desc' => 'Write here the Main title',
+                'type' => 'text',
+            ),
+
+            array(
+                'id' => 'hconsult-link',
+                'name' => 'Button Link',
+                'desc' => 'Write here the link url',
+                'type' => 'text',
+            ),
+
+
+            array(
+                'id' => 'hconsult-bgimg',
+                'name' => 'Image',
+                'desc' => 'Upload the image',
+                'type' => 'file',
+            ),
+
+        )
+
+    );
 
 
 
@@ -463,20 +463,20 @@ function metabox_service(array $product_meta)
         'id' => 'post-services',
         'title' => 'Extra Section',
         'object_types' => array('service'),
-        'fields' => array( 
+        'fields' => array(
             array(
                 'id' => 'service-jobs',
                 'name' => 'Jobs done',
                 'desc' => 'Write here the jobs done text',
                 'type' => 'text',
-            ), 
+            ),
 
             array(
                 'id' => 'service-image',
                 'name' => 'Upload box image',
                 'desc' => 'Upload the image',
                 'type' => 'file',
-            ), 
+            ),
         )
 
     );
@@ -498,7 +498,7 @@ function metabox_contact(array $contact_meta)
             'key' => 'page-template',
             'value' => 'contact.php',
         ),
-        'fields' => array( 
+        'fields' => array(
             array(
                 'id' => 'contact-title',
                 'name' => 'Contact Title',
@@ -555,7 +555,7 @@ function metabox_contact(array $contact_meta)
                 'default' => 'We re Ready To Help You',
                 'type' => 'text',
             ),
-            
+
         )
 
     );
@@ -577,7 +577,7 @@ function metabox_buy_product_form(array $buy_product_meta)
             'key' => 'page-template',
             'value' => 'buy-product.php',
         ),
-        'fields' => array( 
+        'fields' => array(
             array(
                 'id' => 'buy-product-title',
                 'name' => 'Buy Product Title',
@@ -616,14 +616,14 @@ function metabox_sreview(array $product_meta)
         'id' => 'post-review',
         'title' => 'Extra Section',
         'object_types' => array('review'),
-        'fields' => array(  
+        'fields' => array(
 
-            array( 
+            array(
                 'id' => 'review-position',
                 'name' => 'Client Position',
                 'desc' => 'Write here the position text',
                 'type' => 'text',
-            ), 
+            ),
 
         )
 
@@ -645,74 +645,74 @@ function metabox_slider_home(array $product_meta)
         'id' => 'post-slider',
         'title' => 'Extra Section',
         'object_types' => array('slider'),
-        'fields' => array(  
+        'fields' => array(
 
 
-            array( 
+            array(
                 'id' => 'slider-desc',
                 'name' => 'Slider Descrption',
                 'desc' => 'Write here the descrption text',
                 'type' => 'textarea',
-            ), 
+            ),
 
-            array( 
+            array(
                 'id' => 'slider-titleup',
                 'name' => 'Upper title text',
                 'desc' => 'Write here the title text',
                 'type' => 'text',
-            ), 
+            ),
 
-            array( 
+            array(
                 'id' => 'slider-titlebottom',
                 'name' => 'Bottom title text',
                 'desc' => 'Write here the title text',
                 'type' => 'text',
-            ), 
+            ),
 
-            array( 
+            array(
                 'id' => 'slider-titleborderd',
                 'name' => 'Bordered title text',
                 'desc' => 'Write here the title text',
                 'type' => 'text',
-            ), 
+            ),
 
 
-            array( 
+            array(
                 'id' => 'slider-titlebottom',
                 'name' => 'Bottom title text',
                 'desc' => 'Write here the title text',
                 'type' => 'text',
-            ), 
+            ),
 
 
-            array( 
+            array(
                 'id' => 'slider-btntxt1',
                 'name' => 'Button 1 title',
                 'desc' => 'Write here the title text',
                 'type' => 'text',
-            ), 
+            ),
 
-            array( 
+            array(
                 'id' => 'slider-btnlink1',
                 'name' => 'Button 1 Link',
                 'desc' => 'Write here the link url',
                 'type' => 'text',
-            ), 
+            ),
 
 
-            array( 
+            array(
                 'id' => 'slider-btntxt2',
                 'name' => 'Button 2 title',
                 'desc' => 'Write here the title text',
                 'type' => 'text',
-            ), 
+            ),
 
-            array( 
+            array(
                 'id' => 'slider-btnlink2',
                 'name' => 'Button 2 Link',
                 'desc' => 'Write here the link url',
                 'type' => 'text',
-            ), 
+            ),
 
         )
 
@@ -735,21 +735,21 @@ function metabox_slider_products(array $product_meta)
         'id' => 'product-slider',
         'title' => 'Extra Section',
         'object_types' => array('ourproduct'),
-        'fields' => array(  
+        'fields' => array(
 
 
-            array( 
+            array(
                 'id' => 'opro-btnlink1',
                 'name' => 'Button 1 link',
                 'desc' => 'Write here the link',
                 'type' => 'text',
-            ), 
-            array( 
+            ),
+            array(
                 'id' => 'opro-btnlink2',
                 'name' => 'Button 2 link',
                 'desc' => 'Write here the link',
                 'type' => 'text',
-            ), 
+            ),
 
         )
     );
@@ -772,7 +772,7 @@ function home_achivement_metaboxes()
         'show_on' => array(
             'key' => 'page-template',  // This sets the display condition to only show the metabox on pages using the Homepage template
             'value' => 'index.php',  //page file name
-         ),
+        ),
         'context' => 'normal',
         'priority' => 'high',
         'show_names' => true, // Show field names on the left
@@ -803,16 +803,14 @@ function home_achivement_metaboxes()
         'desc' => 'Enter the Subtitle',
         'id' => 'home-achive-subtitle',
         'type' => 'text',
-     ));
+    ));
 
-     $cmb->add_group_field($add_more_option, array(
+    $cmb->add_group_field($add_more_option, array(
         'name' => 'Image',
         'desc' => 'Upload the Image',
         'id' => 'home-achive-img',
         'type' => 'file',
-     ));
-
-
+    ));
 }
 
 
@@ -851,8 +849,6 @@ function service_ptypes_metaboxes()
         'id' => 'service-field-title',
         'type' => 'text',
     ));
-
-
 }
 
 
@@ -871,13 +867,13 @@ function service_home_whychoose()
         'show_on' => array(
             'key' => 'page-template',  // This sets the display condition to only show the metabox on pages using the Homepage template
             'value' => 'index.php',  //page file name
-         ),
+        ),
         'context' => 'normal',
         'priority' => 'high',
         'show_names' => true, // Show field names on the left
     ));
 
- 
+
 
     $add_more_option = $cmb->add_field(array(
         'id' => 'spost_group_hwhychoose',
@@ -905,7 +901,6 @@ function service_home_whychoose()
         'id' => 'whychoose-desc',
         'type' => 'textarea',
     ));
-
 }
 
 
@@ -924,13 +919,13 @@ function service_home_skill()
         'show_on' => array(
             'key' => 'page-template',  // This sets the display condition to only show the metabox on pages using the Homepage template
             'value' => 'index.php',  //page file name
-         ),
+        ),
         'context' => 'normal',
         'priority' => 'high',
         'show_names' => true, // Show field names on the left
     ));
 
- 
+
 
     $add_more_option = $cmb->add_field(array(
         'id' => 'spost_group_hskills',
@@ -958,7 +953,6 @@ function service_home_skill()
         'id' => 'hskill-number',
         'type' => 'text',
     ));
-
 }
 
 
@@ -980,7 +974,7 @@ function service_ourproduct_details()
         'show_names' => true, // Show field names on the left
     ));
 
- 
+
 
     $add_more_option = $cmb->add_field(array(
         'id' => 'spost_group_opdetails',
@@ -1015,7 +1009,6 @@ function service_ourproduct_details()
         'id' => 'oprodetail-img',
         'type' => 'file',
     ));
-
 }
 
 
@@ -1035,7 +1028,7 @@ function service_ourproduct_faqs()
         'show_names' => true, // Show field names on the left
     ));
 
- 
+
 
     $add_more_option = $cmb->add_field(array(
         'id' => 'spost_group_opfaqs',
@@ -1063,7 +1056,6 @@ function service_ourproduct_faqs()
         'id' => 'opfaqs-answr',
         'type' => 'textarea',
     ));
-
 }
 
 
@@ -1073,15 +1065,15 @@ function service_ourproduct_review()
 {
 
     $cmb = new_cmb2_box(array(
-        'id' => 'repeater_demo_opreview',  
+        'id' => 'repeater_demo_opreview',
         'title' => 'Product Reviews',
         'object_types' => array('ourproduct'),
         'context' => 'normal',
         'priority' => 'high',
-        'show_names' => true, 
+        'show_names' => true,
     ));
 
- 
+
 
     $add_more_option = $cmb->add_field(array(
         'id' => 'spost_group_opreview',
@@ -1091,8 +1083,8 @@ function service_ourproduct_review()
             'group_title' => 'Add More Review {#}',
             'add_button' => 'Add Another Review',
             'remove_button' => 'Remove Review',
-            'closed' => true,  
-            'sortable' => true, 
+            'closed' => true,
+            'sortable' => true,
         ),
     ));
 
@@ -1116,18 +1108,13 @@ function service_ourproduct_review()
         'id' => 'opreview-cntnt',
         'type' => 'textarea',
     ));
-
- 
-
 }
 
 
 
 /*
-
 Output=========
 <?php echo get_post_meta(get_the_ID(),'developer', true); ?>
-
 */
 
- 
+

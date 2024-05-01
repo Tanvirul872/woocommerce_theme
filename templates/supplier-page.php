@@ -3,45 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-    <style>
-        /* Add your custom styles here */
+<style>
+    /* Add your custom styles here */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    th,
+    td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .admin_stock_page img {
+        height: 50px;
+        width: 50px;
+    }
+
+    @media screen and (max-width: 600px) {
         table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
+            border: 1px solid #ddd;
         }
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
+        th,
+        td {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         th {
-            background-color: #f2f2f2;
+            text-align: left;
         }
-
-        .admin_stock_page img{
-            height:50px;
-            width:50px; 
-        }
-
-        @media screen and (max-width: 600px) {
-            table {
-                border: 1px solid #ddd;
-            }
-
-            th, td {
-                display: block;
-                width: 100%;
-                box-sizing: border-box;
-            }
-
-            th {
-                text-align: left;
-            }
-        }
-    </style>
+    }
+</style>
 <!-- </head>
 <body> -->
 

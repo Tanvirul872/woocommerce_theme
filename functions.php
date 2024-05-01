@@ -65,10 +65,10 @@ add_image_size('single-thumbnail', 600, 337, true);
 // woocommerce support 
 
 function customtheme_add_woocommerce_support()
- {
-add_theme_support( 'woocommerce' );
+{
+	add_theme_support('woocommerce');
 }
-add_action( 'after_setup_theme', 'customtheme_add_woocommerce_support' );
+add_action('after_setup_theme', 'customtheme_add_woocommerce_support');
 
 
 
@@ -76,8 +76,46 @@ add_action( 'after_setup_theme', 'customtheme_add_woocommerce_support' );
 require_once('functions/custom.php');
 require_once('functions/ajax-actions.php');
 require_once('functions/create-database.php');
-require_once('functions/woocommerce-functions.php'); 
+require_once('functions/woocommerce-functions.php');
 
+
+
+add_action('admin_enqueue_scripts', 'my_admin_enqueue_styles');
+function my_admin_enqueue_styles()
+{
+	// Get the current theme
+	$theme = wp_get_theme();
+
+	// Enqueue custom JavaScript
+	wp_enqueue_script(
+		'scripts-js',
+		get_stylesheet_directory_uri() . '/functions/scripts.js',
+		array('jquery'),
+		$theme->get('Version'),
+		true
+	);
+
+	// Localize script with ajax_url
+	wp_localize_script('scripts-js', 'variables', [
+		'ajax_url' => admin_url('admin-ajax.php'),
+	]);
+
+
+	// Enqueue Select2 styles
+	wp_enqueue_style(
+		'select2-css',
+		'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css'
+	);
+
+	// Enqueue Select2 script
+	wp_enqueue_script(
+		'select2-js',
+		'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js',
+		array('jquery'),
+		$theme->get('Version'),
+		true
+	);
+}
 
 
 // require_once('functions/add-image-taxonomy.php');
@@ -92,12 +130,6 @@ include('metabox/init.php');
 include('metabox/functions.php');
 
 add_theme_support('title-tags');
-
-
-
-
-
-
 
 
 
