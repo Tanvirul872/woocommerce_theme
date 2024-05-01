@@ -267,7 +267,32 @@ jQuery(document).ready(function ($) {
 
       // Update the grand total field
       $('.grand-total').text(grandTotal.toFixed(2));
+      $('.payable_amount').text(grandTotal.toFixed(2));
+      $('.due_amount').text(grandTotal.toFixed(2));
+
+      // Set grandTotal value to input fields
+      $('input[name="payable"]').val(grandTotal.toFixed(2));
+      $('input[name="due"]').val(grandTotal.toFixed(2));
+
   }
+
+
+function updateDue() {
+    var payable = parseFloat($('input[name="payable"]').val());
+    var paid = parseFloat($('input[name="paid"]').val());
+    var due = payable - paid;
+    $('input[name="due"]').val(due.toFixed(2));
+    $('.due_amount').text(due.toFixed(2));
+}
+
+// Call updateDue() when the page loads
+updateDue();
+
+// Call updateDue() when the "paid" input field changes
+$('input[name="paid"]').on('input', function() {
+    updateDue();
+});
+
 
 });
 

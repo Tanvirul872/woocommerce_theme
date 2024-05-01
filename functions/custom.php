@@ -808,40 +808,6 @@ function add_pos_menu()
 }
 add_action('admin_menu', 'add_pos_menu');
 
-
-
-
-// Add return menu to the dashboard
-function add_supplier_menu()
-{
-
-    // Add suppliers Menu
-    add_menu_page(
-        'suppliers',        // Page title
-        'suppliers',        // Menu title
-        'manage_options',   // Capability required to access the menu
-        'suppliers_page',   // Menu slug
-        'suppliers_page_content', // Callback function to display page content
-        'dashicons-groups', // Icon for the menu (optional)
-        24                // Menu position (adjust as needed)
-    );
-
-    // Add submenu
-    add_submenu_page(
-        'suppliers_page',     // Parent menu slug
-        'Add New supplier',   // Page title
-        'Add New supplier',   // Menu title
-        'manage_options',   // Capability required to access the submenu
-        'add_new_supplier',   // Submenu slug
-        'add_new_supplier_content' // Callback function to display submenu content
-    );
-}
-add_action('admin_menu', 'add_supplier_menu');
-
-
-
-
-
 // Current month report 
 function add_current_report_menu()
 {
@@ -949,12 +915,6 @@ function add_new_customer_content()
     include(get_template_directory() . '/templates/add-customer.php');
 }
 
-
-// Callback function for purchase page content
-function suppliers_page_content()
-{
-    include(get_template_directory() . '/templates/supplier-page.php');
-}
 
 // Callback function for purchase page content
 function add_new_supplier_content()

@@ -45,6 +45,61 @@ function woo_product_profit_create_table() {
 
 
 
+// Register activation hook
+register_activation_hook( __FILE__, 'woo_product_purchase_order_table' );
+add_action( 'after_switch_theme', 'woo_product_purchase_order_table' ); 
+function woo_product_purchase_order_table() {
+    global $wpdb;
+
+    $table_name = $wpdb->prefix . 'woo_purchase_orders';
+    $charset_collate = $wpdb->get_charset_collate();
+    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+        id mediumint(9) NOT NULL AUTO_INCREMENT,
+        bill_no varchar(255) NOT NULL,
+        payable varchar(255) NOT NULL,
+        paid varchar(255) NOT NULL,
+        due varchar(255) NOT NULL,
+        note varchar(255)  NULL,
+        supplier_id int(11) NOT NULL,
+        date datetime NOT NULL,
+        PRIMARY KEY (id)
+    ) $charset_collate;";
+
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+}
+
+
+
+// Register activation hook
+register_activation_hook( __FILE__, 'woo_product_purchase_order_items' );
+add_action( 'after_switch_theme', 'woo_product_purchase_order_items' ); 
+function woo_product_purchase_order_items() {
+    global $wpdb;
+
+    $table_name = $wpdb->prefix . 'woo_purchase_order_items';
+    $charset_collate = $wpdb->get_charset_collate();
+    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+        id mediumint(9) NOT NULL AUTO_INCREMENT,
+        product_id INT(11) NOT NULL,
+        rate varchar(255) NOT NULL,
+        bill_no varchar(255) NOT NULL,
+        quantity INT(11) NOT NULL,
+        subtotal INT(11) NOT NULL,
+        date datetime NOT NULL,
+        PRIMARY KEY (id)
+    ) $charset_collate;";
+
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+}
+
+
+
+
+
+
+
 // Add a new field to the wp_woocommerce_order_items table
 function add_product_profit_field() {
     global $wpdb;

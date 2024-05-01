@@ -63,6 +63,12 @@
         </div>
 
         <div class="product">
+            <label for="product"> Purchase Note </label>
+            <textarea name="note" id="" cols="30" rows="10"></textarea>
+        </div>
+
+
+        <div class="product">
             <label for="product"> Search Product </label>
             <input type="text" name="search_product" class="search_product_for_purchase" ajax_url="<?php echo admin_url('admin-ajax.php');?>">
         </div>
@@ -100,9 +106,17 @@
 </div>
 
 
-<div class="payble_due">
+<div class="payble_due"> 
 
+<label for="payable">Payable</label> 
+<input type="hidden" name="payable" value="" > <br>
+<p class="payable_amount"> </p>
+<label for="due">Due</label>
+<input type="hidden" name="due" value="" ><br>
+<p class="due_amount"> </p>
 
+<label for="paid">Pay Amounts</label>
+<input type="number" name="paid" value="" ><br>
 
 
 </div>

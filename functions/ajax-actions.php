@@ -153,8 +153,6 @@ function purchase_product()
     $formFields = [];
     wp_parse_str($_POST['purchase_product'], $formFields); 
 
-    // echo '<pre>' ; 
-    // print_r( $formFields) ; 
 
 
     $originalArray = $formFields ;
@@ -162,8 +160,23 @@ function purchase_product()
 
     global $wpdb;
     
+
+
+$last_bill_no = $wpdb->get_var("SELECT MAX(CAST(bill_no AS UNSIGNED)) FROM {$wpdb->prefix}woo_purchase_orders");
+if(!empty($last_bill_no)){
+    $new_bill_no = $last_bill_no + 1;
+}else{
+    $new_bill_no = '00000001';
+}
+// Increment the last bill_no by 1
+
+
+
+
+
+
     // Table name
-    $table_name = $wpdb->prefix . 'product_purchase';
+    $table_name = $wpdb->prefix . 'woo_purchase_order_items';
     $data_to_insert = array();
     for ($i = 0; $i < count($originalArray['productid']); $i++) {
         $data_to_insert[] = array(
@@ -171,14 +184,19 @@ function purchase_product()
             'rate' => $originalArray['rate'][$i],
             'quantity' => $originalArray['quantity'][$i],
             'subtotal' => $originalArray['subtotal'][$i],
-            'date' => $originalArray['purchase_date'], // Assuming same purchase date for all products
-            'note' => '' // You can set note if needed
+            'date' => $originalArray['purchase_date'],
+            'bill_no' => $new_bill_no ,
+            // Assuming same purchase date for all products
+            // 'note' => $originalArray['note'], // You can set note if needed
+            // 'supplier_id' => $originalArray['supplier'], 
+            // 'payable' => $originalArray['payable'], 
+            // 'paid' => $originalArray['paid'], 
+            // 'due' => $originalArray['due'], 
         );
     }
     
     // Insert data into the database
     foreach ($data_to_insert as $data) {
-
 
         $wpdb->insert($table_name, $data);
         $product_id = $data['product_id'] ;
@@ -195,16 +213,27 @@ function purchase_product()
         // Update the stock quantity meta field
         update_post_meta($product_id, '_stock', $new_stock);
 
-        
-        // print_r($new_stock) ;
-        // exit ; 
-        // wc_update_product_stock($product, $new_stock, 'increase');
-
-
     }
+
+        $table_name_2 =  $wpdb->prefix . 'woo_purchase_orders';  
+        $purchase_order_data = array( 
+            'bill_no' => $new_bill_no,
+            'payable' => $originalArray['payable'], 
+            'paid' => $originalArray['paid'], 
+            'due' => $originalArray['due'], 
+            'note' => $originalArray['note'], // You can set note if needed
+            'supplier_id' => $originalArray['supplier'], 
+            'date' => $originalArray['purchase_date'], // Assuming same purchase date for all products
+            
+        );
     
 
-wp_die() ; 
+    $wpdb->insert($table_name_2, $purchase_order_data); 
+    if ($wpdb->last_error) {
+        echo "Error: " . $wpdb->last_error;
+    } 
+
+    wp_die() ; 
 
 
 

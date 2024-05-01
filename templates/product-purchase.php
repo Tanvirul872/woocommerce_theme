@@ -54,15 +54,11 @@
             <th>Bill No</th>
             <th>Supplier</th>
             <th>Purchase Date</th>
-            <th>Items</th>
             <th>Payable</th>
             <th>Paid</th>
             <th>Due</th>
-            <th> Product Name </th>
-            <th>quantity</th>
-            <th>rate</th>
-            <th>Subtotal</th>
-       
+            <th> Product Name (Quantity) </th>
+            
         </tr>
     </thead>
     <tbody>
@@ -77,7 +73,7 @@ $offset = ($current_page - 1) * $items_per_page;
 
 
             global $wpdb;
-            $table_name = $wpdb->prefix . 'product_purchase'; // Assuming the table name is wp_product_purchase
+            $table_name = $wpdb->prefix . 'woo_purchase_orders'; // Assuming the table name is wp_product_purchase
             // $query = "SELECT * FROM $table_name";
             // $results = $wpdb->get_results($query); 
 
@@ -89,27 +85,46 @@ $offset = ($current_page - 1) * $items_per_page;
                     $offset
                 ) ); 
 
+            // echo '<pre>' ;
+            // print_r($results) ; 
+            foreach ($results as $result){ 
 
 
-// echo '<pre>' ;
-// print_r($results) ; 
-foreach ($results as $result){ 
-    $product = wc_get_product($result->product_id);
+                $bill_no = $result->bill_no;
+                $table_name_2 = $wpdb->prefix . 'woo_purchase_order_items';
+                $get_items = $wpdb->get_results(
+                    $wpdb->prepare(
+                        "SELECT * FROM $table_name_2 
+                        WHERE bill_no = %s
+                        LIMIT %d OFFSET %d",
+                        $bill_no,
+                        $items_per_page,
+                        $offset
+                    )
+                );
+
 
     ?>
 
 <tr>
     <td> <?php echo $result->id ; ?> </td>
-    <td> Supplier </td>
+    <td> <?php echo get_the_title($result->supplier_id); ?> </td>
     <td> <?php echo $result->date ; ?> </td>
-    <td>Items</td>
     <td> <?php echo $result->payable ; ?> </td>
     <td> <?php echo $result->paid ; ?> </td>
     <td> <?php echo $result->due ; ?> </td>
-    <td> <?php echo $product->get_name() ; ?> </td>
-    <td> <?php echo $result->quantity ; ?></td>
-    <td> <?php echo $result->rate ; ?></td>
-    <td> <?php echo $result->subtotal ; ?></td>
+    <td> 
+        
+       <?php 
+
+
+         foreach($get_items as $item){ 
+            $product = wc_get_product($item->product_id);
+            echo $product->get_name().'('.$item->quantity.')'.'<br>'; 
+         }
+
+       ?>
+    </td>
 </tr>
 
 <?php } ?>
