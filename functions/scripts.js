@@ -221,7 +221,7 @@ jQuery(document).ready(function ($) {
                       var newRow = '<tr>' +
                           '<td>1</td>' +
                           '<td>' + productName + '</td>' +
-                          '<input type="hidden" name="productid[]" value="' + product_id + '" class="rate-input">' +
+                          '<input type="hidden" name="productid[]" value="' + product_id + '" class="product-id">' +
                           '<td> <input type="number" name="rate[]" value="' + purchasePrice + '" class="rate-input"> </td>' +
                           '<td> <input type="number" name="quantity[]" value="1" class="quantity-input"> </td>' +
                           '<input type="hidden" name="subtotal[]" value="' + purchasePrice + '" class="subtotal-price">' +

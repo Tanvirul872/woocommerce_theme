@@ -35,29 +35,27 @@
 <!-- Your HTML code with Select2 initialization -->
 
 <div class="product">
-    <label for="product"> Add product </label>
-    <select name="select" id="product_select" class="select2_products">
-        <?php 
+    <label for="supplier">Select Supplier</label>
+    <select name="supplier" style="width: 100%;">
+        <?php
+        // Get suppliers
         $args = array(
-            'post_type' => 'product',
-            'posts_per_page' => -1,
+            'post_type' => 'supplier', // Assuming 'supplier' is your custom post type
+            'posts_per_page' => -1, // Retrieve all suppliers
         );
-        $products = new WP_Query($args);
-        if ($products->have_posts()) :
-            while ($products->have_posts()) : $products->the_post();
-                $product_id = get_the_ID();
-                $product_title = get_the_title();
-        ?>
-                <option value="<?php echo esc_attr($product_id); ?>"><?php echo esc_html($product_title); ?></option>
+        $suppliers = new WP_Query($args);
+
+        // Check if there are any suppliers
+        if ($suppliers->have_posts()) :
+            while ($suppliers->have_posts()) : $suppliers->the_post(); ?>
+                <option value="<?php the_ID(); ?>"><?php the_title(); ?></option>
         <?php
             endwhile;
-            wp_reset_postdata();
-        else :
-            echo '<option value="">No products found</option>';
-        endif;
-        ?>
+            wp_reset_postdata(); // Reset the query
+         endif; ?>
     </select>
 </div>
+
 
         <div class="product">
             <label for="product"> Purchase Date </label>
@@ -100,6 +98,15 @@
 <div class="grand-subtotal">
 <span class="grand-total"></span>
 </div>
+
+
+<div class="payble_due">
+
+
+
+
+</div>
+
 
 <div class="purchase_btn">
     <!-- <a href="#"> Purchase </a> -->

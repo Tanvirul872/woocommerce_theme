@@ -1,6 +1,138 @@
 <?php
 
 
+// Register Custom Post Type
+function custom_supplier_post_type() {
+
+    $labels = array(
+        'name'                  => _x( 'Suppliers', 'Post Type General Name', 'text_domain' ),
+        'singular_name'         => _x( 'Supplier', 'Post Type Singular Name', 'text_domain' ),
+        'menu_name'             => __( 'Suppliers', 'text_domain' ),
+        'name_admin_bar'        => __( 'Supplier', 'text_domain' ),
+        'archives'              => __( 'Supplier Archives', 'text_domain' ),
+        'attributes'            => __( 'Supplier Attributes', 'text_domain' ),
+        'parent_item_colon'     => __( 'Parent Supplier:', 'text_domain' ),
+        'all_items'             => __( 'All Suppliers', 'text_domain' ),
+        'add_new_item'          => __( 'Add New Supplier', 'text_domain' ),
+        'add_new'               => __( 'Add New', 'text_domain' ),
+        'new_item'              => __( 'New Supplier', 'text_domain' ),
+        'edit_item'             => __( 'Edit Supplier', 'text_domain' ),
+        'update_item'           => __( 'Update Supplier', 'text_domain' ),
+        'view_item'             => __( 'View Supplier', 'text_domain' ),
+        'view_items'            => __( 'View Suppliers', 'text_domain' ),
+        'search_items'          => __( 'Search Supplier', 'text_domain' ),
+        'not_found'             => __( 'Supplier Not found', 'text_domain' ),
+        'not_found_in_trash'    => __( 'Supplier Not found in Trash', 'text_domain' ),
+        'featured_image'        => __( 'Featured Image', 'text_domain' ),
+        'set_featured_image'    => __( 'Set featured image', 'text_domain' ),
+        'remove_featured_image' => __( 'Remove featured image', 'text_domain' ),
+        'use_featured_image'    => __( 'Use as featured image', 'text_domain' ),
+        'insert_into_item'      => __( 'Insert into supplier', 'text_domain' ),
+        'uploaded_to_this_item' => __( 'Uploaded to this supplier', 'text_domain' ),
+        'items_list'            => __( 'Suppliers list', 'text_domain' ),
+        'items_list_navigation' => __( 'Suppliers list navigation', 'text_domain' ),
+        'filter_items_list'     => __( 'Filter suppliers list', 'text_domain' ),
+    );
+    $args = array(
+        'label'                 => __( 'Supplier', 'text_domain' ),
+        'description'           => __( 'Supplier Description', 'text_domain' ),
+        'labels'                => $labels,
+        'supports'              => array( 'title', 'thumbnail' ),
+        // 'taxonomies'            => array( 'category' ),
+        'hierarchical'          => false,
+        'public'                => true,
+        'show_ui'               => true,
+        'show_in_menu'          => true,
+        'menu_position'         => 5,
+        'show_in_admin_bar'     => true,
+        'show_in_nav_menus'     => true,
+        'can_export'            => true,
+        'has_archive'           => true,
+        'exclude_from_search'   => false,
+        'publicly_queryable'    => true,
+        'capability_type'       => 'page',
+        'show_in_rest'          => true,
+    );
+    register_post_type( 'supplier', $args );
+
+}
+add_action( 'init', 'custom_supplier_post_type', 0 );
+
+
+
+// Add Meta Box
+function custom_supplier_meta_box() {
+    add_meta_box(
+        'custom_supplier_meta_box',
+        __('Supplier Meta Box', 'text_domain'),
+        'custom_supplier_meta_box_callback',
+        'supplier', // Custom post type name
+        'normal',
+        'default'
+    );
+}
+add_action('add_meta_boxes', 'custom_supplier_meta_box');
+
+// Meta Box Callback Function
+function custom_supplier_meta_box_callback($post) {
+    // Retrieve existing meta values if they exist
+    $field1_value = get_post_meta($post->ID, '_custom_supplier_email', true);
+    $field2_value = get_post_meta($post->ID, '_custom_supplier_phone', true);
+    $field3_value = get_post_meta($post->ID, '_custom_supplier_address', true);
+
+    // Output fields
+    ?>
+    <p>
+
+    <?php print_r('hello') ; ?>
+        <label for="custom_supplier_email"><?php _e('Supplier Mail:', 'text_domain'); ?></label><br>
+        <input type="email" id="custom_supplier_email" name="custom_supplier_email" value="<?php echo esc_attr($field1_value); ?>" style="width: 100%;">
+    </p>
+    <p>
+        <label for="custom_supplier_phone"><?php _e('Supplier Phone:', 'text_domain'); ?></label><br>
+        <input type="number" id="custom_supplier_phone" name="custom_supplier_phone" value="<?php echo esc_attr($field2_value); ?>" style="width: 100%;">
+    </p>
+    <p>
+        <label for="custom_supplier_address"><?php _e('Supplier Address:', 'text_domain'); ?></label><br>
+        <textarea name="custom_supplier_address" id="" cols="30" rows="10" style="width: 100%;">
+             <?php echo esc_attr($field3_value); ?>
+        </textarea>
+    </p>
+    <?php
+}
+
+// Save Meta Box Data
+function save_custom_supplier_meta_box_data($post_id) {
+
+    // $post_id = 229 ;
+
+
+    // Check if this is an autosave
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    // Check permissions
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+    // Save field data
+    if (isset($_POST['custom_supplier_email'])) {
+        update_post_meta($post_id, '_custom_supplier_email', sanitize_text_field($_POST['custom_supplier_email']));
+    }
+    if (isset($_POST['custom_supplier_phone'])) {
+        update_post_meta($post_id, '_custom_supplier_phone', sanitize_text_field($_POST['custom_supplier_phone']));
+    }
+    if (isset($_POST['custom_supplier_address'])) {
+        update_post_meta($post_id, '_custom_supplier_address', sanitize_text_field($_POST['custom_supplier_address']));
+    }
+}
+add_action('save_post', 'save_custom_supplier_meta_box_data');
+
+
+
+
+
+
 // // service custom post type  
 
 // add_action( 'init', 'create_service_post_type' );

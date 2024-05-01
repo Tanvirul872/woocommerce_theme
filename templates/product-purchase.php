@@ -51,7 +51,13 @@
 <table class="admin_stock_page">
     <thead>
         <tr>
-            <th>No</th>
+            <th>Bill No</th>
+            <th>Supplier</th>
+            <th>Purchase Date</th>
+            <th>Items</th>
+            <th>Payable</th>
+            <th>Paid</th>
+            <th>Due</th>
             <th> Product Name </th>
             <th>quantity</th>
             <th>rate</th>
@@ -60,14 +66,31 @@
         </tr>
     </thead>
     <tbody>
-        <!-- Add your table data here -->
+<!-- Add your table data here -->
 
-        <?php 
+<?php 
+
+// Define the number of items per page
+$items_per_page = 10;
+$current_page = isset($_GET['paged']) ? $_GET['paged'] : 1;
+$offset = ($current_page - 1) * $items_per_page;
+
 
             global $wpdb;
             $table_name = $wpdb->prefix . 'product_purchase'; // Assuming the table name is wp_product_purchase
-            $query = "SELECT * FROM $table_name";
-            $results = $wpdb->get_results($query);
+            // $query = "SELECT * FROM $table_name";
+            // $results = $wpdb->get_results($query); 
+
+            $results = $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT * FROM $table_name 
+                    LIMIT %d OFFSET %d",
+                    $items_per_page,
+                    $offset
+                ) ); 
+
+
+
 // echo '<pre>' ;
 // print_r($results) ; 
 foreach ($results as $result){ 
@@ -77,6 +100,12 @@ foreach ($results as $result){
 
 <tr>
     <td> <?php echo $result->id ; ?> </td>
+    <td> Supplier </td>
+    <td> <?php echo $result->date ; ?> </td>
+    <td>Items</td>
+    <td> <?php echo $result->payable ; ?> </td>
+    <td> <?php echo $result->paid ; ?> </td>
+    <td> <?php echo $result->due ; ?> </td>
     <td> <?php echo $product->get_name() ; ?> </td>
     <td> <?php echo $result->quantity ; ?></td>
     <td> <?php echo $result->rate ; ?></td>
@@ -85,6 +114,8 @@ foreach ($results as $result){
 
 <?php } ?>
       
+
+
 
       
 
@@ -97,3 +128,39 @@ foreach ($results as $result){
 <!-- 
 </body>
 </html> -->
+
+
+
+
+
+<?php 
+
+
+
+
+// Calculate the total number of items
+$total_items = $wpdb->get_var("SELECT COUNT(*) FROM $table_name");
+// Calculate the total number of pages
+$total_pages = ceil($total_items / $items_per_page);
+// Define the pagination base URL
+$pagination_base_url = 'http://localhost/ecommerce_theme/wp-admin/admin.php?page=purchase_page';
+// Generate the pagination links
+$pagination_links = paginate_links(array(
+  'base'      => $pagination_base_url . '%_%',
+  'format'    => '&paged=%#%',
+  'current'   => $current_page,
+  'total'     => $total_pages,
+  'prev_text' => '&laquo;',
+  'next_text' => '&raquo;',
+));
+// Display the pagination links
+if ($pagination_links) {
+  echo '<div class="pagination pagination_frontend">' . $pagination_links . '</div>';
+}
+
+
+// print_r($pagination_base_url) ;
+// print_r($current_page) ;
+// print_r($offset) ;
+
+?>
