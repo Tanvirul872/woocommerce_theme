@@ -61,17 +61,24 @@
 <div class="report_div">
     <div class="report_items">
         <a href="#">  Sale Amount <br> 
-          
+          <?php echo strip_tags( wc_price(get_order_sales_by_date() ) ) ; ?>  
        </a>
     </div>
     <div class="report_items">
-        <a href="#">Purchase Cost</a>
+        <a href="#">Purchase Cost  <br> 
+            <?php echo strip_tags( wc_price(get_todays_purchase_cost() ) ) ; ?>
+        </a>
     </div>
     <div class="report_items">
-       <a href="#">Expense</a>
+       <a href="#"> Expense <br> 
+           <?php echo strip_tags( wc_price(calculate_total_expense_today() ) ) ; ?>
+       </a>
     </div>
     <div class="report_items">
-       <a href="#">Sell Profit</a>
+       <a href="#">Sell Profit <br>
+       <?php echo strip_tags( wc_price(get_todays_sell_profit() ) ) ; ?>
+       
+       </a>
     </div>
 </div>
 

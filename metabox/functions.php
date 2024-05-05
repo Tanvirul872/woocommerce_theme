@@ -6,6 +6,7 @@ function metabox_for_expense(array $product_meta)
 {
 
 
+
     // home blog section 
     $product_meta[] = array(
 
@@ -15,34 +16,27 @@ function metabox_for_expense(array $product_meta)
         'fields' => array(
 
             array(
-                'id' => 'expense-amount',
-                'name' => ' Expense Amount:',
-                'desc' => ' Expense Amount',
-                'type' => 'text',
-            ),
-
-            array(
                 'id' => 'expense-title',
                 'name' => 'Expense Name:',
                 'desc' => 'Write Expense Name',
                 'type' => 'text',
             ),
 
+
+            array(
+                'id' => 'expense-amount',
+                'name' => ' Expense Amount:',
+                'desc' => ' Expense Amount',
+                'type' => 'text',
+            ),
+
+        
             array(
                 'id' => 'expense-date',
                 'name' => 'Expense Date',
                 'desc' => 'Write Expense Date',
                 'type' => 'text_date',
             ),
-
-            array(
-                'id'      => 'expense-category',
-                'name'    => 'Expense Category',
-                'desc'    => 'Select Expense Category',
-                'type'    => 'taxonomy_select',
-                'taxonomy' => 'expense_category', // Specify the custom taxonomy
-            ),
-
 
             array(
                 'id'      => 'expense-note',
@@ -52,10 +46,6 @@ function metabox_for_expense(array $product_meta)
 
 
             ),
-
-
-
-
 
         )
     );

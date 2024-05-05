@@ -518,17 +518,6 @@ add_action( 'woocommerce_new_order', 'set_default_product_profit' );
 
 
 
-function show_ordered_detailsssss(){
-  $order_id = 223; 
-  $order = wc_get_order( $order_id );
-  $items = $order->get_items(); 
-
-  echo '<pre>' ;
-  print_r($items[206]) ;
-  
-}
-
-add_action('wp_footer','show_ordered_detailsssss') ; 
 // // Hook into WooCommerce new order event
 // // add_action( 'woocommerce_admin_order_actions_end', 'calculate_and_store_profit_manual_on_backend' );
 // add_action( 'woocommerce_new_order', 'calculate_and_store_profit_manual', 10, 1 );
@@ -625,3 +614,131 @@ add_action('wp_footer','show_ordered_detailsssss') ;
 
 // // Hook the function to the 'wp' action, which is triggered when WordPress is fully loaded
 // add_action( 'wp', 'add_new_product' );
+
+
+
+
+
+
+
+// add_action('wp_footer','get_order_sales_by_date') ; 
+function get_order_sales_by_date() {  
+
+  $orders = wc_get_orders( array(
+      'date_paid' => date( 'Y-m-d' )
+  ) );
+  $total_of_all=0;
+    foreach($orders as $order){
+      $total = $order->get_total() ;
+      $total_of_all+= $total;
+    }
+    
+  return $total_of_all ; 
+
+}
+
+
+function get_todays_purchase_cost() {  
+
+  global $wpdb;
+  $table_name = $wpdb->prefix . 'woo_purchase_orders';
+  $today_date = date( 'Y-m-d');
+  $query = $wpdb->prepare(
+      "SELECT * FROM $table_name WHERE DATE(date) = %s",
+      $today_date
+  );
+  $results = $wpdb->get_results( $query );
+
+  $total_payable =0 ; 
+  if ( $results ) {
+      foreach ( $results as $result ) {
+          $payable = $result->payable;
+          $total_payable+= $payable;
+      }
+  } 
+
+  return $total_payable ;
+ }
+
+
+
+
+
+//  add_action('wp_footer','get_todays_sell_profit') ;
+ function get_todays_sell_profit() {  
+
+
+  $orders = wc_get_orders( array(
+    'date_paid' => date( 'Y-m-d' )
+) );
+
+
+foreach ($orders as $order){
+
+  global $wpdb; 
+  $table_name = $wpdb->prefix . 'woocommerce_order_items';
+  $order_id =   $order->id ; 
+  $query = $wpdb->prepare(
+      "SELECT * FROM $table_name WHERE order_id = %d",
+      $order_id
+  ); 
+
+  $results = $wpdb->get_results( $query );
+
+  $total_sell_profit =0 ; 
+  if ( $results ) {
+      foreach ( $results as $result ) {
+          $product_profit = $result->product_profit;
+          $quantity_orderd = $result->quantity_orderd;
+          $sell_profit = ($product_profit * $quantity_orderd) ; 
+          $total_sell_profit += $sell_profit; 
+      }
+  } 
+
+}
+
+  return $total_sell_profit ; 
+ }
+
+
+
+
+
+ // Function to calculate total expense amount for today
+ function calculate_total_expense_today() {
+     // Get today's date
+    //  $today = date('Y/m/d');
+     $today = date('m/d/Y');
+     // Query expenses for today
+     $args = array(
+         'post_type'      => 'expense',
+         'posts_per_page' => -1, // Get all posts
+     );
+ 
+     $query = new WP_Query($args);
+ 
+     // Initialize total expense amount
+     $total_expense_amount = 0;
+ 
+     // Loop through each expense and calculate total amount
+     if ($query->have_posts()) {
+         while ($query->have_posts()) {
+             $query->the_post();
+             $expense_amount = get_post_meta(get_the_ID(), 'expense-amount', true);
+             $expense_date = get_post_meta(get_the_ID(), 'expense-date', true);
+             if($expense_date == $today){
+                $total_expense_amount += floatval($expense_amount);
+             }
+
+            
+         }
+     }
+ 
+     // Restore original post data
+     wp_reset_postdata();
+      return $total_expense_amount;
+ }
+ 
+
+
+ 
