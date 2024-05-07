@@ -60,354 +60,6 @@ add_action( 'init', 'custom_supplier_post_type', 0 );
 
 
 
-// Add Meta Box
-function custom_supplier_meta_box() {
-    add_meta_box(
-        'custom_supplier_meta_box',
-        __('Supplier Meta Box', 'text_domain'),
-        'custom_supplier_meta_box_callback',
-        'supplier', // Custom post type name
-        'normal',
-        'default'
-    );
-}
-add_action('add_meta_boxes', 'custom_supplier_meta_box');
-
-// Meta Box Callback Function
-function custom_supplier_meta_box_callback($post) {
-    // Retrieve existing meta values if they exist
-    $field1_value = get_post_meta($post->ID, '_custom_supplier_email', true);
-    $field2_value = get_post_meta($post->ID, '_custom_supplier_phone', true);
-    $field3_value = get_post_meta($post->ID, '_custom_supplier_address', true);
-
-    // Output fields
-    ?>
-    <p>
-
-    <?php print_r('hello') ; ?>
-        <label for="custom_supplier_email"><?php _e('Supplier Mail:', 'text_domain'); ?></label><br>
-        <input type="email" id="custom_supplier_email" name="custom_supplier_email" value="<?php echo esc_attr($field1_value); ?>" style="width: 100%;">
-    </p>
-    <p>
-        <label for="custom_supplier_phone"><?php _e('Supplier Phone:', 'text_domain'); ?></label><br>
-        <input type="number" id="custom_supplier_phone" name="custom_supplier_phone" value="<?php echo esc_attr($field2_value); ?>" style="width: 100%;">
-    </p>
-    <p>
-        <label for="custom_supplier_address"><?php _e('Supplier Address:', 'text_domain'); ?></label><br>
-        <textarea name="custom_supplier_address" id="" cols="30" rows="10" style="width: 100%;">
-             <?php echo esc_attr($field3_value); ?>
-        </textarea>
-    </p>
-    <?php
-}
-
-// Save Meta Box Data
-function save_custom_supplier_meta_box_data($post_id) {
-
-    // $post_id = 229 ;
-
-
-    // Check if this is an autosave
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-        return;
-    }
-    // Check permissions
-    if (!current_user_can('edit_post', $post_id)) {
-        return;
-    }
-    // Save field data
-    if (isset($_POST['custom_supplier_email'])) {
-        update_post_meta($post_id, '_custom_supplier_email', sanitize_text_field($_POST['custom_supplier_email']));
-    }
-    if (isset($_POST['custom_supplier_phone'])) {
-        update_post_meta($post_id, '_custom_supplier_phone', sanitize_text_field($_POST['custom_supplier_phone']));
-    }
-    if (isset($_POST['custom_supplier_address'])) {
-        update_post_meta($post_id, '_custom_supplier_address', sanitize_text_field($_POST['custom_supplier_address']));
-    }
-}
-add_action('save_post', 'save_custom_supplier_meta_box_data');
-
-
-
-
-
-
-// // service custom post type  
-
-// add_action( 'init', 'create_service_post_type' );
-
-// function create_service_post_type() {
-//     $labels = array(
-//         'name'                  => __( 'Services', 'bongo_theme' ),
-//         'singular_name'         => __( 'Service', 'bongo_theme' ),
-//         'menu_name'             => __( 'Services', 'bongo_theme' ),
-//         'all_items'             => __( 'All Services', 'bongo_theme' ),
-//         'add_new'               => __( 'Add New', 'bongo_theme' ),
-//         'add_new_item'          => __( 'Add New Service', 'bongo_theme' ),
-//         'edit_item'             => __( 'Edit Service', 'bongo_theme' ),
-//         'new_item'              => __( 'New Service', 'bongo_theme' ),
-//         'view_item'             => __( 'View Service', 'bongo_theme' ),
-//         'search_items'          => __( 'Search Services', 'bongo_theme' ),
-//         'not_found'             => __( 'No services found', 'bongo_theme' ),
-//         'not_found_in_trash'    => __( 'No services found in trash', 'bongo_theme' ),
-//         'parent_item_colon'     => __( 'Parent Service:', 'bongo_theme' ),
-//         'featured_image'        => __( 'Featured image', 'bongo_theme' ),
-//         'set_featured_image'    => __( 'Set featured image', 'bongo_theme' ),
-//         'remove_featured_image' => __( 'Remove featured image', 'bongo_theme' ),
-//         'use_featured_image'    => __( 'Use as featured image', 'bongo_theme' ),
-//         'archives'              => __( 'Service archives', 'bongo_theme' ),
-//         'insert_into_item'      => __( 'Insert into service', 'bongo_theme' ),
-//         'uploaded_to_this_item' => __( 'Uploaded to this service', 'bongo_theme' ),
-//         'filter_items_list'     => __( 'Filter services list', 'bongo_theme' ),
-//         'items_list_navigation' => __( 'Services list navigation', 'bongo_theme' ),
-//         'items_list'            => __( 'Services list', 'bongo_theme' ),
-//     );
-//     $args = array(
-//         'label'                 => __( 'Service', 'bongo_theme' ),
-//         'description'           => __( 'Services offered by our company', 'bongo_theme' ),
-//         'labels'                => $labels,
-//         'supports'              => array( 'title', 'editor', 'thumbnail' ),
-//         'public'                => true,
-//         'show_ui'               => true,
-//         'show_in_menu'          => true,
-//         'menu_position'         => 5,
-//         'show_in_admin_bar'     => true,
-//         'show_in_nav_menus'     => true,
-//         'can_export'            => true,
-//         'has_archive'           => true,
-//         'hierarchical'          => false,
-//         'exclude_from_search'   => false,
-//         'show_in_rest'          => true,
-//         'publicly_queryable'    => true,
-//         'capability_type'       => 'post',
-//         'rewrite'               => array( 'slug' => 'service' ),
-//     );
-//     register_post_type( 'service', $args );
-// }
-
-
-
-// // review custom post type 
-// add_action( 'init', 'create_review_post_type' );
-
-// function create_review_post_type() {
-//     $labels = array(
-//         'name'                  => __( 'Reviews', 'bongo_theme' ),
-//         'singular_name'         => __( 'Review', 'bongo_theme' ),
-//         'menu_name'             => __( 'Reviews', 'bongo_theme' ),
-//         'all_items'             => __( 'All Reviews', 'bongo_theme' ),
-//         'add_new'               => __( 'Add New', 'bongo_theme' ),
-//         'add_new_item'          => __( 'Add New Reviews', 'bongo_theme' ),
-//         'edit_item'             => __( 'Edit Review', 'bongo_theme' ),
-//         'new_item'              => __( 'New Review', 'bongo_theme' ),
-//         'view_item'             => __( 'View Review', 'bongo_theme' ),
-//         'search_items'          => __( 'Search Review', 'bongo_theme' ),
-//         'not_found'             => __( 'No Reviews found', 'bongo_theme' ),
-//         'not_found_in_trash'    => __( 'No Reviews found in trash', 'bongo_theme' ),
-//         'parent_item_colon'     => __( 'Parent Review:', 'bongo_theme' ),
-//         'featured_image'        => __( 'Featured image', 'bongo_theme' ),
-//         'set_featured_image'    => __( 'Set featured image', 'bongo_theme' ),
-//         'remove_featured_image' => __( 'Remove featured image', 'bongo_theme' ),
-//         'use_featured_image'    => __( 'Use as featured image', 'bongo_theme' ),
-//         'archives'              => __( 'Reviews archives', 'bongo_theme' ),
-//         'insert_into_item'      => __( 'Insert into Reviews', 'bongo_theme' ),
-//         'uploaded_to_this_item' => __( 'Uploaded to this Reviews', 'bongo_theme' ),
-//         'filter_items_list'     => __( 'Filter Reviews list', 'bongo_theme' ),
-//         'items_list_navigation' => __( 'Reviews list navigation', 'bongo_theme' ),
-//         'items_list'            => __( 'Reviews list', 'bongo_theme' ),
-//     );
-//     $args = array(
-//         'label'                 => __( 'Review', 'bongo_theme' ),
-//         'description'           => __( 'Reviews', 'bongo_theme' ),
-//         'labels'                => $labels,
-//         'supports'              => array( 'title', 'editor', 'thumbnail' ),
-//         'public'                => true,
-//         'show_ui'               => true,
-//         'show_in_menu'          => true,
-//         'menu_position'         => 5,
-//         'show_in_admin_bar'     => true,
-//         'show_in_nav_menus'     => true,
-//         'can_export'            => true,
-//         'has_archive'           => true,
-//         'hierarchical'          => false,
-//         'exclude_from_search'   => false,
-//         'show_in_rest'          => true,
-//         'publicly_queryable'    => true,
-//         'capability_type'       => 'post',
-//         'rewrite'               => array( 'slug' => 'review' ),
-//     );
-//     register_post_type( 'review', $args );
-// }
-
-
-
-
-
-// //Our Clients custom post type 
-// add_action( 'init', 'create_client_post_type' );
-
-// function create_client_post_type() {
-//     $labels = array(
-//         'name'                  => __( 'Clients', 'bongo_theme' ),
-//         'singular_name'         => __( 'Client', 'bongo_theme' ),
-//         'menu_name'             => __( 'Clients', 'bongo_theme' ),
-//         'all_items'             => __( 'All Client', 'bongo_theme' ),
-//         'add_new'               => __( 'Add New', 'bongo_theme' ),
-//         'add_new_item'          => __( 'Add New Clients', 'bongo_theme' ),
-//         'edit_item'             => __( 'Edit Client', 'bongo_theme' ),
-//         'new_item'              => __( 'New Client', 'bongo_theme' ),
-//         'view_item'             => __( 'View Client', 'bongo_theme' ),
-//         'search_items'          => __( 'Search Client', 'bongo_theme' ),
-//         'not_found'             => __( 'No Clients found', 'bongo_theme' ),
-//         'not_found_in_trash'    => __( 'No Clients found in trash', 'bongo_theme' ),
-//         'parent_item_colon'     => __( 'Parent Client:', 'bongo_theme' ),
-//         'featured_image'        => __( 'Featured image', 'bongo_theme' ),
-//         'set_featured_image'    => __( 'Set featured image', 'bongo_theme' ),
-//         'remove_featured_image' => __( 'Remove featured image', 'bongo_theme' ),
-//         'use_featured_image'    => __( 'Use as featured image', 'bongo_theme' ),
-//         'archives'              => __( 'Clients archives', 'bongo_theme' ),
-//         'insert_into_item'      => __( 'Insert into Clients', 'bongo_theme' ),
-//         'uploaded_to_this_item' => __( 'Uploaded to this Clients', 'bongo_theme' ),
-//         'filter_items_list'     => __( 'Filter Clients list', 'bongo_theme' ),
-//         'items_list_navigation' => __( 'Clients list navigation', 'bongo_theme' ),
-//         'items_list'            => __( 'Clients list', 'bongo_theme' ),
-//     );
-//     $args = array(
-//         'label'                 => __( 'Client', 'bongo_theme' ),
-//         'description'           => __( 'Clients', 'bongo_theme' ),
-//         'labels'                => $labels,
-//         'supports'              => array( 'title', 'editor', 'thumbnail' ),
-//         'public'                => true,
-//         'show_ui'               => true,
-//         'show_in_menu'          => true,
-//         'menu_position'         => 5,
-//         'show_in_admin_bar'     => true,
-//         'show_in_nav_menus'     => true,
-//         'can_export'            => true,
-//         'has_archive'           => true,
-//         'hierarchical'          => false,
-//         'exclude_from_search'   => false,
-//         'show_in_rest'          => true,
-//         'publicly_queryable'    => true,
-//         'capability_type'       => 'post',
-//         'rewrite'               => array( 'slug' => 'our-client' ),
-//     );
-//     register_post_type( 'ourclient', $args );
-// }
-
-
-
-
-// //Slider custom post type 
-// add_action( 'init', 'create_slider_post_type' );
-
-// function create_slider_post_type() {
-//     $labels = array(
-//         'name'                  => __( 'Slider', 'bongo_theme' ),
-//         'singular_name'         => __( 'Slider', 'bongo_theme' ),
-//         'menu_name'             => __( 'Sliders', 'bongo_theme' ),
-//         'all_items'             => __( 'All Sliders', 'bongo_theme' ),
-//         'add_new'               => __( 'Add New Slider', 'bongo_theme' ),
-//         'add_new_item'          => __( 'Add New Slider', 'bongo_theme' ),
-//         'edit_item'             => __( 'Edit Slider', 'bongo_theme' ),
-//         'new_item'              => __( 'New Slider', 'bongo_theme' ),
-//         'view_item'             => __( 'View Slider', 'bongo_theme' ),
-//         'search_items'          => __( 'Search Slider', 'bongo_theme' ),
-//         'not_found'             => __( 'No Slider found', 'bongo_theme' ),
-//         'not_found_in_trash'    => __( 'No Slider found in trash', 'bongo_theme' ),
-//         'parent_item_colon'     => __( 'Parent Slider:', 'bongo_theme' ),
-//         'featured_image'        => __( 'Featured image', 'bongo_theme' ),
-//         'set_featured_image'    => __( 'Set featured image', 'bongo_theme' ),
-//         'remove_featured_image' => __( 'Remove featured image', 'bongo_theme' ),
-//         'use_featured_image'    => __( 'Use as featured image', 'bongo_theme' ),
-//         'archives'              => __( 'Slider archives', 'bongo_theme' ),
-//         'insert_into_item'      => __( 'Insert into Slider', 'bongo_theme' ),
-//         'uploaded_to_this_item' => __( 'Uploaded to this Slider', 'bongo_theme' ),
-//         'filter_items_list'     => __( 'Filter Slider list', 'bongo_theme' ),
-//         'items_list_navigation' => __( 'Slider list navigation', 'bongo_theme' ),
-//         'items_list'            => __( 'Slider list', 'bongo_theme' ),
-//     );
-//     $args = array(
-//         'label'                 => __( 'Slider', 'bongo_theme' ),
-//         'description'           => __( 'Slider', 'bongo_theme' ),
-//         'labels'                => $labels,
-//         'supports'              => array( 'title', 'thumbnail' ),
-//         'public'                => true,
-//         'show_ui'               => true,
-//         'show_in_menu'          => true,
-//         'menu_position'         => 5,
-//         'show_in_admin_bar'     => true,
-//         'show_in_nav_menus'     => true,
-//         'can_export'            => true,
-//         'has_archive'           => true,
-//         'hierarchical'          => false,
-//         'exclude_from_search'   => false,
-//         'show_in_rest'          => true,
-//         'publicly_queryable'    => true,
-//         'capability_type'       => 'post',
-//         'rewrite'               => array( 'slug' => 'slider' ),
-//     );
-//     register_post_type( 'slider', $args );
-// }
-
-
-
-
-
-// //Our products custom post type 
-// add_action( 'init', 'create_products_post_type' );
-
-// function create_products_post_type() {
-//     $labels = array(
-//         'name'                  => __( 'Products', 'bongo_theme' ),
-//         'singular_name'         => __( 'Product', 'bongo_theme' ),
-//         'menu_name'             => __( 'Products', 'bongo_theme' ),
-//         'all_items'             => __( 'All Product', 'bongo_theme' ),
-//         'add_new'               => __( 'Add New', 'bongo_theme' ),
-//         'add_new_item'          => __( 'Add New Product', 'bongo_theme' ),
-//         'edit_item'             => __( 'Edit Product', 'bongo_theme' ),
-//         'new_item'              => __( 'New Product', 'bongo_theme' ),
-//         'view_item'             => __( 'View Product', 'bongo_theme' ),
-//         'search_items'          => __( 'Search Product', 'bongo_theme' ),
-//         'not_found'             => __( 'No Products found', 'bongo_theme' ),
-//         'not_found_in_trash'    => __( 'No Products found in trash', 'bongo_theme' ),
-//         'parent_item_colon'     => __( 'Parent Product:', 'bongo_theme' ),
-//         'featured_image'        => __( 'Featured image', 'bongo_theme' ),
-//         'set_featured_image'    => __( 'Set featured image', 'bongo_theme' ),
-//         'remove_featured_image' => __( 'Remove featured image', 'bongo_theme' ),
-//         'use_featured_image'    => __( 'Use as featured image', 'bongo_theme' ),
-//         'archives'              => __( 'Product archives', 'bongo_theme' ),
-//         'insert_into_item'      => __( 'Insert into Product', 'bongo_theme' ),
-//         'uploaded_to_this_item' => __( 'Uploaded to this Product', 'bongo_theme' ),
-//         'filter_items_list'     => __( 'Filter Product list', 'bongo_theme' ),
-//         'items_list_navigation' => __( 'Product list navigation', 'bongo_theme' ),
-//         'items_list'            => __( 'Product list', 'bongo_theme' ),
-//     );
-//     $args = array(
-//         'label'                 => __( 'Product', 'bongo_theme' ),
-//         'description'           => __( 'Products', 'bongo_theme' ),
-//         'labels'                => $labels,
-//         'supports'              => array( 'title', 'editor', 'thumbnail' ),
-//         'public'                => true,
-//         'show_ui'               => true,
-//         'show_in_menu'          => true,
-//         'menu_position'         => 5,
-//         'show_in_admin_bar'     => true,
-//         'show_in_nav_menus'     => true,
-//         'can_export'            => true,
-//         'has_archive'           => true,
-//         'hierarchical'          => false,
-//         'exclude_from_search'   => false,
-//         'show_in_rest'          => true,
-//         'publicly_queryable'    => true,
-//         'capability_type'       => 'post',
-//         'rewrite'               => array( 'slug' => 'our-product' ),
-//     );
-//     register_post_type( 'ourproduct', $args );
-// }
-
-
 // brands taxonomy function  
 
 function create_product_brand_taxonomy()
@@ -535,7 +187,7 @@ function custom_dashboard_widget_content()
      <!-- dashboard widget 1 -->
      <div class="custom_widget_box">
           <h2> Today Sold </h2>
-          <p>0</p>
+          <p> <?php echo strip_tags( wc_price(get_order_sales_by_date() ) ) ; ?>  </p>
      </div>
     <?php
 }
@@ -547,7 +199,7 @@ function custom_dashboard_widget_content2()
      <!-- dashboard widget 1 -->
      <div class="custom_widget_box">
           <h2>  Today Expense  </h2>
-          <p>0</p>
+          <p><?php echo strip_tags( wc_price(calculate_total_expense_today() ) ) ; ?> </p>
      </div>
     <?php
 }
@@ -558,7 +210,7 @@ function custom_dashboard_widget_content3()
     <!-- dashboard widget 1 -->
     <div class="custom_widget_box">
          <h2> Today Purchase Cost  </h2>
-         <p>0</p>
+         <p><?php echo strip_tags( wc_price(get_todays_purchase_cost() ) ) ; ?></p>
     </div>
    <?php
 }
@@ -570,8 +222,8 @@ function custom_dashboard_widget_content_4()
     ?>
     <!-- dashboard widget 1 -->
     <div class="custom_widget_box">
-         <h2> Today Purchase Cost  </h2>
-         <p>0</p>
+         <h2> Today Sell Profit </h2>
+         <p> <?php echo strip_tags( wc_price(get_todays_sell_profit() ) ) ; ?> </p>
     </div>
    <?php
 }
@@ -582,7 +234,7 @@ function custom_dashboard_widget_content_5()
     ?>
     <!-- dashboard widget 1 -->
     <div class="custom_widget_box">
-         <h2> Today Purchase Cost  </h2>
+         <h2> Total Receivable </h2>
          <p>0</p>
     </div>
    <?php
@@ -594,53 +246,91 @@ function custom_dashboard_widget_content6()
     ?>
     <!-- dashboard widget 1 -->
     <div class="custom_widget_box">
-         <h2> Today Purchase Cost  </h2>
+         <h2> Total Payable </h2>
          <p>0</p>
     </div>
    <?php
 }
 
 
+function custom_dashboard_widget_content7()
+{ ?>
+
+
+    <!-- dashboard widget 1 -->
+    <div class="custom_widget_box">
+         <h2>Stock-Purchase Value</h2>
+         <p>
+            <?php echo strip_tags( wc_price(total_stock_purchase_value() ) ) ; ?>
+        </p>
+    </div>
+   <?php
+}
+
+function custom_dashboard_widget_content8()
+{
+    ?>
+    <!-- dashboard widget 1 -->
+    <div class="custom_widget_box">
+         <h2> Stock - Sell Value </h2>
+         <p><?php echo strip_tags( wc_price(total_stock_sell_value() ) ) ; ?></p>
+    </div>
+   <?php
+
+}
+
 
 function add_custom_dashboard_widget()
 {
     wp_add_dashboard_widget(
         'custom_dashboard_widget',
-        'Custom Widget',
+        'Today Sold',
         'custom_dashboard_widget_content'
     );
 
 
     wp_add_dashboard_widget(
         'custom_dashboard_widget_2',
-        'Custom Widget 2',
+        'Today Expense',
         'custom_dashboard_widget_content2'
     );
 
     wp_add_dashboard_widget(
         'custom_dashboard_widget_3',
-        'Custom Widget 3',
+        'Today Purchase Cost',
         'custom_dashboard_widget_content3'
     );
 
 
     wp_add_dashboard_widget(
         'custom_dashboard_widget_4',
-        'Custom Widget 4',
+        'Today Sell Profit',
         'custom_dashboard_widget_content_4'
     );
 
 
     wp_add_dashboard_widget(
         'custom_dashboard_widget_5',
-        'Custom Widget 5',
+        'Total Receivable',
         'custom_dashboard_widget_content_5'
     );
 
     wp_add_dashboard_widget(
         'custom_dashboard_widget_6',
-        'Custom Widget 6',
-        'custom_dashboard_widget_content_5'
+        'Total Payable',
+        'custom_dashboard_widget_content6'
+    );
+
+    wp_add_dashboard_widget(
+        'custom_dashboard_widget_7',
+        'Stock-Purchase Value',
+        'custom_dashboard_widget_content7'
+    );
+
+    wp_add_dashboard_widget(
+        'custom_dashboard_widget_8',
+        ' Stock - Sell Value',
+        'custom_dashboard_widget_content8'
     );
 
 

@@ -2,58 +2,58 @@
 
 
 
-function metabox_for_expense(array $product_meta)
-{
+// function metabox_for_expense(array $product_meta)
+// {
 
 
 
-    // home blog section 
-    $product_meta[] = array(
+//     // home blog section 
+//     $product_meta[] = array(
 
-        'id' => 'post-expense',
-        'title' => 'Add Expense',
-        'object_types' => array('expense'),
-        'fields' => array(
+//         'id' => 'post-expense',
+//         'title' => 'Add Expense',
+//         'object_types' => array('expense'),
+//         'fields' => array(
 
-            array(
-                'id' => 'expense-title',
-                'name' => 'Expense Name:',
-                'desc' => 'Write Expense Name',
-                'type' => 'text',
-            ),
+//             array(
+//                 'id' => 'expense-title',
+//                 'name' => 'Expense Name:',
+//                 'desc' => 'Write Expense Name',
+//                 'type' => 'text',
+//             ),
 
 
-            array(
-                'id' => 'expense-amount',
-                'name' => ' Expense Amount:',
-                'desc' => ' Expense Amount',
-                'type' => 'text',
-            ),
+//             array(
+//                 'id' => 'expense-amount',
+//                 'name' => 'Expense Amount:',
+//                 'desc' => ' Expense Amount',
+//                 'type' => 'text',
+//             ),
 
         
-            array(
-                'id' => 'expense-date',
-                'name' => 'Expense Date',
-                'desc' => 'Write Expense Date',
-                'type' => 'text_date',
-            ),
+//             array(
+//                 'id' => 'expense-date',
+//                 'name' => 'Expense Date',
+//                 'desc' => 'Write Expense Date',
+//                 'type' => 'text_date',
+//             ),
 
-            array(
-                'id'      => 'expense-note',
-                'type'    => 'textarea',
-                'name'    => 'Expense Note',
-                'desc'    => 'Select Expense Category',
+//             array(
+//                 'id'      => 'expense-note',
+//                 'type'    => 'textarea',
+//                 'name'    => 'Expense Note',
+//                 'desc'    => 'Select Expense Category',
 
 
-            ),
+//             ),
 
-        )
-    );
+//         )
+//     );
 
-    return $product_meta;
-}
+//     return $product_meta;
+// }
 
-add_filter('cmb2_meta_boxes', 'metabox_for_expense');
+// add_filter('cmb2_meta_boxes', 'metabox_for_expense');
 
 
 // Metabox for taxonomy term (pa_color in this case)

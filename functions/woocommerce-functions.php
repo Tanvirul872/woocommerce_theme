@@ -668,11 +668,11 @@ function get_todays_purchase_cost() {
  function get_todays_sell_profit() {  
 
 
-  $orders = wc_get_orders( array(
+$orders = wc_get_orders( array(
     'date_paid' => date( 'Y-m-d' )
 ) );
 
-
+$total_sell_profit =0 ;
 foreach ($orders as $order){
 
   global $wpdb; 
@@ -685,7 +685,7 @@ foreach ($orders as $order){
 
   $results = $wpdb->get_results( $query );
 
-  $total_sell_profit =0 ; 
+  
   if ( $results ) {
       foreach ( $results as $result ) {
           $product_profit = $result->product_profit;
@@ -741,4 +741,80 @@ foreach ($orders as $order){
  
 
 
- 
+
+
+//  total product stock sell value 
+ function total_stock_sell_value(){
+
+  $args = array(
+      'post_type'      => 'product',
+      'posts_per_page' => -1,
+  );
+
+  $total_stock_sale_value = 0 ; 
+  $products = new WP_Query($args);
+
+      if ($products->have_posts()) :
+          while ($products->have_posts()) : $products->the_post();
+              $product_id = get_the_ID();
+              $available_stock = get_post_meta(get_the_ID(), '_stock', true);
+              $product_price = get_post_meta($product_id, '_price', true);
+
+              $available_stock = isset($available_stock) ? intval($available_stock) : 0; // Convert to integer and set to 0 if not set
+              $product_price = isset($product_price) ? floatval($product_price) : 0.0; // Convert to float and set to 0.0 if not set
+
+              // Perform the calculation
+              $total_sale_value = $available_stock * $product_price;
+              $total_stock_sale_value += $total_sale_value ;
+
+          endwhile;
+          wp_reset_postdata();
+
+      endif;
+      return $total_stock_sale_value; 
+
+}
+
+
+
+
+
+//  total product stock sell value 
+function total_stock_purchase_value(){
+
+  $args = array(
+      'post_type'      => 'product',
+      'posts_per_page' => -1,
+  );
+
+  $total_stock_purchase_value = 0 ; 
+  $products = new WP_Query($args);
+
+      if ($products->have_posts()) :
+          while ($products->have_posts()) : $products->the_post();
+              $product_id = get_the_ID();
+              $available_stock = get_post_meta(get_the_ID(), '_stock', true);
+              // $product_price = get_post_meta($product_id, '_price', true);
+              $purchase_price = get_post_meta(get_the_ID(), '_purchase_price', true) ; 
+
+
+              $available_stock = isset($available_stock) ? intval($available_stock) : 0; // Convert to integer and set to 0 if not set
+              $purchase_price = isset($purchase_price) ? floatval($purchase_price) : 0.0; // Convert to float and set to 0.0 if not set
+
+
+              // Perform the calculation
+              $total_purchase_value = $available_stock * $purchase_price;
+
+              // echo '<pre>' ; 
+              // print_r(get_the_title($product_id).'stock '.$purchase_price) ; 
+              $total_stock_purchase_value += $total_purchase_value ;
+
+          endwhile;
+          wp_reset_postdata();
+
+      endif;
+
+      return $total_stock_purchase_value; 
+
+}
+

@@ -121,9 +121,9 @@
 
                         echo implode(' | ', $categoryNames);
                         ?>
-
                     </td>
-                    <td><?php echo $available_stock; ?></td>
+                
+                    <td><?php echo $available_stock; ?> </td>
                     <td> 
                         <?php echo get_woocommerce_currency_symbol();  ?>
                         <?php echo get_post_meta(get_the_ID(), '_price', true); ?>
