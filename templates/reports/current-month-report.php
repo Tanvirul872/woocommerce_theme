@@ -54,18 +54,29 @@
 
 <div class="report_div">
     <div class="report_items">
-        <a href="#">Sale Amount</a>
+        <a href="#">Sale Amount <br>
+          <?php echo strip_tags( wc_price(get_order_sales_by_this_month() ) ) ; ?>  
+        </a>
     </div>
     <div class="report_items">
-        <a href="#">Purchase Cost</a>
+        <a href="#">Purchase Cost <br>
+          <?php echo strip_tags( wc_price(get_monthly_purchase_cost() ) ) ; ?> 
+        </a>
     </div>
     <div class="report_items">
-       <a href="#">Expense</a>
+       <a href="#">Expense <br>
+          <?php echo strip_tags( wc_price(calculate_total_expense_current_month() ) ) ; ?> 
+       </a>
     </div>
     <div class="report_items">
-       <a href="#">Sell Profit</a>
+       <a href="#">Sell Profit <br>
+       <?php  //echo strip_tags( wc_price(calculate_total_sellprofit_current_month() ) ) ; ?>
+          <?php // echo calculate_total_sellprofit_current_month() ; ?> 
+      </a>
     </div>
 </div>
+
+
 
 
 

@@ -587,3 +587,124 @@ function total_stock_purchase_value(){
 }
 
 
+
+
+
+
+
+// current month calculation starts  
+
+
+
+
+function get_order_sales_by_this_month() {  
+
+  // Get the current month and year
+  $current_month = date('m');
+  $current_year = date('Y');
+
+  // Calculate the first and last day of the current month
+  $first_day_of_month = date('Y-m-01', strtotime("$current_year-$current_month-01"));
+  $last_day_of_month = date('Y-m-t', strtotime("$current_year-$current_month-01"));
+
+  // Get orders for the current month
+  $orders = wc_get_orders( array(
+      'date_paid' => '>=' . $first_day_of_month,
+      'date_paid' => '<=' . $last_day_of_month,
+  ) );
+
+  $total_of_all = 0;
+
+  // Calculate total sales for the current month
+  foreach($orders as $order) {
+      $total = $order->get_total();
+      $total_of_all += $total;
+  }
+  
+  return $total_of_all; 
+}
+
+
+
+
+
+function get_monthly_purchase_cost() {  
+
+  global $wpdb;
+  $table_name = $wpdb->prefix . 'woo_purchase_orders';
+
+  // Get the current month and year
+  $current_month = date('m');
+  $current_year = date('Y');
+
+  // Calculate the first and last day of the current month
+  $first_day_of_month = date('Y-m-01', strtotime("$current_year-$current_month-01"));
+  $last_day_of_month = date('Y-m-t', strtotime("$current_year-$current_month-01"));
+
+  $query = $wpdb->prepare(
+      "SELECT * FROM $table_name WHERE date BETWEEN %s AND %s",
+      $first_day_of_month,
+      $last_day_of_month
+  );
+  $results = $wpdb->get_results( $query );
+
+  // echo '<pre>'; 
+  // print_r($results) ;
+
+  $total_purchase_cost = 0; 
+
+  if ( $results ) {
+      foreach ( $results as $result ) {
+          $payable = $result->payable;
+          $total_purchase_cost += $payable;
+      }
+  } 
+
+  return $total_purchase_cost;
+}
+
+
+
+
+function calculate_total_expense_current_month() {
+  // Get current month and year
+  $current_month = date('m');
+  $current_year = date('Y');
+
+  // Calculate the first and last day of the current month
+  $first_day_of_month = date('Y-m-01', strtotime("$current_year-$current_month-01"));
+  $last_day_of_month = date('Y-m-t', strtotime("$current_year-$current_month-01"));
+
+  // Query expenses for the current month
+  $args = array(
+      'post_type'      => 'expense',
+      'posts_per_page' => -1,
+      'meta_query'     => array(
+          array(
+              'key'     => 'expense-date',
+              'value'   => array($first_day_of_month, $last_day_of_month),
+              'compare' => 'BETWEEN',
+              'type'    => 'DATE',
+          ),
+      ),
+  );
+
+  $query = new WP_Query($args);
+
+  // Initialize total expense amount
+  $total_expense_amount = 0;
+
+  // Loop through each expense and calculate total amount
+  if ($query->have_posts()) {
+      while ($query->have_posts()) {
+          $query->the_post();
+          $expense_amount = get_post_meta(get_the_ID(), 'expense-amount', true);
+          $total_expense_amount += floatval($expense_amount);
+      }
+  }
+
+  // Reset post data
+  wp_reset_postdata();
+
+  return $total_expense_amount;
+}
