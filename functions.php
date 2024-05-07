@@ -74,6 +74,8 @@ add_action('after_setup_theme', 'customtheme_add_woocommerce_support');
 
 //custom post types
 require_once('functions/custom.php'); 
+require_once('functions/custom-widgets.php'); 
+require_once('functions/admin-dashboard-menu.php'); 
 require_once('functions/metabox.php');
 require_once('functions/ajax-actions.php');
 require_once('functions/create-database.php');

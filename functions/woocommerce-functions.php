@@ -174,77 +174,6 @@ remove_action('woocommerce_after_shop_loop_item_title', 'woocommerce_template_lo
 
 
 
-
-		
-
-
-
-// Function to add a simple product to the cart
-// function add_product_to_cart($product_id, $quantity) {
-	
-
-	
-	
-//     $product = wc_get_product($product_id);
-//     if ($product) {
-//         WC()->cart->add_to_cart($product_id, $quantity);
-//     }
-	
-	
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-// // Hook the function to the 'wp' action, which is triggered when WordPress is fully loaded
-// add_action('wp', 'add_five_star_review_to_product');
-
-// function add_five_star_review_to_product() {
-//     // Check if WooCommerce is active
-//     if (class_exists('WooCommerce')) {
-//         // Set the product ID
-//         $product_id = 50;
-
-//         // Check if the product ID is valid
-//         if (wc_get_product($product_id)) {
-//             // Get the current user
-//             $user = wp_get_current_user();
-
-//             // Prepare review data
-//             $review_data = array(
-//                 'comment_post_ID' => $product_id,
-//                 'comment_author' => $user->display_name,
-//                 'comment_author_email' => $user->user_email,
-//                 'comment_author_url' => '',
-//                 'comment_content' => 'This is a 5-star review.',
-//                 'comment_type' => 'review',
-//                 'comment_parent' => 0,
-//                 'user_id' => $user->ID,
-//                 'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
-//                 'comment_agent' => 'WooCommerce',
-//                 'comment_date' => current_time('mysql'),
-//                 'comment_approved' => 1,
-//             );
-
-//             // Insert the review
-//             $comment_id = wp_insert_comment($review_data);
-
-//             // Set the rating
-//             add_comment_meta($comment_id, 'rating', 5);
-//         }
-//     }
-// } 
-
-
-
 function add_new_damage() {
 
   if (isset($_POST['submit_product_damage'])) {
@@ -390,7 +319,8 @@ function enqueue_dataTables_scripts() {
 
 add_action('admin_footer', 'enqueue_dataTables_scripts');
 
-function custom_admin_css(){
+function custom_admin_css(){ 
+
   ?>
 <style>
 .custom_widget_box{
@@ -414,60 +344,10 @@ add_action('admin_footer','custom_admin_css') ;
 
 
 
-// Define the content of the new tab
-function custom_on_memo_tab_content() {
-  // Add your content here
-  echo '<p>This is the content of the On Memo tab.</p>'; 
-  ?>
- <h2> start the html here </h2>
-<?php
-
-}
-add_action( 'woocommerce_account_on_memo_endpoint', 'custom_on_memo_tab_content' );
-
-// Add endpoint for the 'on_memo' tab
-function custom_add_on_memo_endpoint() {
-  add_rewrite_endpoint( 'on_memo', EP_PAGES );
-}
-add_action( 'init', 'custom_add_on_memo_endpoint' );
-
-
-
-// for practice purposes 
-
-function wporg_add_custom_box() {
-	$screens = [ 'post', 'wporg_cpt' ];
-	foreach ( $screens as $screen ) {
-		add_meta_box(
-			'wporg_box_id',                 // Unique ID
-			'Custom Meta Box Title',      // Box title
-			'wporg_custom_box_html',  // Content callback, must be of type callable
-			$screen                            // Post type
-		);
-	}
-}
-add_action( 'add_meta_boxes', 'wporg_add_custom_box' );
-
-
-function wporg_custom_box_html( $post ) {
-	?>
-	<label for="wporg_field">Description for this field</label>
-	<select name="wporg_field" id="wporg_field" class="postbox">
-		<option value="">Select something...</option>
-		<option value="something">Something</option>
-		<option value="else">Else</option>
-	</select>
-	<?php
-}
-
-
-// Add this function to your theme's functions.php file or a custom plugin.
-
 function set_default_product_profit( $order_id ) {
   // Get the order object
   $order = wc_get_order( $order_id );
 
-  // Check if order exists and it's a new order (not being edited)
   if ( !$order || $order->get_date_created() === null ) {
       return;
   }
@@ -496,8 +376,6 @@ function set_default_product_profit( $order_id ) {
       $number_of_items_ordered = $item->get_quantity();
       
 
-      // You need to adapt this part based on your database structure.
-      // Here I'm assuming direct SQL query to update the product_profit field.
       global $wpdb;
       $wpdb->update(
           $wpdb->prefix . 'woocommerce_order_items',
@@ -518,110 +396,10 @@ add_action( 'woocommerce_new_order', 'set_default_product_profit' );
 
 
 
-// // Hook into WooCommerce new order event
-// // add_action( 'woocommerce_admin_order_actions_end', 'calculate_and_store_profit_manual_on_backend' );
-// add_action( 'woocommerce_new_order', 'calculate_and_store_profit_manual', 10, 1 );
-
-// function calculate_and_store_profit_manual( $order_id ) {
-//     // Get the order object
-//     $order = wc_get_order( $order_id );
-
-//     // Get line items from the order
-//     $items = $order->get_items();
-
-//     // Calculate profit for each item and store it
-//     foreach ( $items as $item ) {
-//         $product_id = $item->get_product_id();
-//         $purchase_price = get_post_meta( $product_id, '_purchase_price', true );
-
-//         // Get the regular price of the product
-//         $regular_price = get_post_meta( $product_id, '_regular_price', true );
-
-//         // Get the sale price of the product
-//         $sale_price = get_post_meta( $product_id, '_sale_price', true );
-
-//         // Determine the price to use based on whether the product is on sale or not
-//         $price_to_use = $sale_price ? $sale_price : $regular_price;
-
-//         // Calculate profit
-//         $profit = $price_to_use - $purchase_price;
-
-//         // Store profit in your custom table or wherever you want
-//         // For demonstration, let's assume you have a custom table named 'woo_product_profit'
-//         global $wpdb;
-//         // $table_name = $wpdb->prefix . 'woo_product_profit';
-
-//         $table_name = $wpdb->prefix . 'woocommerce_order_items';
-
-
-//         // Insert profit into the custom table
-//         // $wpdb->insert(
-//         //     $table_name,
-//         //     array(
-//         //         // 'id' => $product_id,
-//         //         'profit' => $profit,
-//         //         'profit_cat' => 'Product Sell',
-//         //         'date' => '2024-04-16 02:30:45',
-//         //     )
-//         // );
-
-
-//         $wpdb->update(
-//           $table_name,
-//           array( 'product_profit' => $total_profit ),
-//           array( 'order_id' => $order_id ),
-//           array( '%f' ),
-//           array( '%d' )
-//       );
-
-
-
-//     }
-// }
 
 
 
 
-
-
-
-
-
-
-
-
-// function add_new_product() {  
-//   // Check if WooCommerce is active
-//   if ( class_exists( 'WooCommerce' ) ) { 
-
-
-
-//     WC()->cart->add_to_cart(56, 1, 66); 
-//     WC()->cart->add_to_cart(56, 2, 67); 
-//     WC()->cart->add_to_cart(56, 3, 68); 
-//     WC()->cart->add_to_cart(56, 4, 69); 
-//     WC()->cart->add_to_cart(56, 5, 70); 
-
-
-//     // WC()->cart->add_to_cart($product_id, $quantity, $variation_id); 
-
-   
-
-  
-  
-//   }
-// }
-
-// // Hook the function to the 'wp' action, which is triggered when WordPress is fully loaded
-// add_action( 'wp', 'add_new_product' );
-
-
-
-
-
-
-
-// add_action('wp_footer','get_order_sales_by_date') ; 
 function get_order_sales_by_date() {  
 
   $orders = wc_get_orders( array(
@@ -637,6 +415,10 @@ function get_order_sales_by_date() {
 
 }
 
+
+
+
+// get todays purchase cost   
 
 function get_todays_purchase_cost() {  
 
@@ -662,38 +444,36 @@ function get_todays_purchase_cost() {
 
 
 
-
-
-//  add_action('wp_footer','get_todays_sell_profit') ;
+ 
+// get todays sell profit 
  function get_todays_sell_profit() {  
 
+  $orders = wc_get_orders( array(
+      'date_paid' => date( 'Y-m-d' )
+  ) );
 
-$orders = wc_get_orders( array(
-    'date_paid' => date( 'Y-m-d' )
-) );
+  $total_sell_profit =0 ;
+  foreach ($orders as $order){
 
-$total_sell_profit =0 ;
-foreach ($orders as $order){
+    global $wpdb; 
+    $table_name = $wpdb->prefix . 'woocommerce_order_items';
+    $order_id =   $order->id ; 
+    $query = $wpdb->prepare(
+        "SELECT * FROM $table_name WHERE order_id = %d",
+        $order_id
+    ); 
 
-  global $wpdb; 
-  $table_name = $wpdb->prefix . 'woocommerce_order_items';
-  $order_id =   $order->id ; 
-  $query = $wpdb->prepare(
-      "SELECT * FROM $table_name WHERE order_id = %d",
-      $order_id
-  ); 
+    $results = $wpdb->get_results( $query );
 
-  $results = $wpdb->get_results( $query );
-
-  
-  if ( $results ) {
-      foreach ( $results as $result ) {
-          $product_profit = $result->product_profit;
-          $quantity_orderd = $result->quantity_orderd;
-          $sell_profit = ($product_profit * $quantity_orderd) ; 
-          $total_sell_profit += $sell_profit; 
-      }
-  } 
+    
+    if ( $results ) {
+        foreach ( $results as $result ) {
+            $product_profit = $result->product_profit;
+            $quantity_orderd = $result->quantity_orderd;
+            $sell_profit = ($product_profit * $quantity_orderd) ; 
+            $total_sell_profit += $sell_profit; 
+        }
+    } 
 
 }
 
@@ -703,16 +483,14 @@ foreach ($orders as $order){
 
 
 
-
  // Function to calculate total expense amount for today
  function calculate_total_expense_today() {
      // Get today's date
-    //  $today = date('Y/m/d');
      $today = date('m/d/Y');
      // Query expenses for today
      $args = array(
          'post_type'      => 'expense',
-         'posts_per_page' => -1, // Get all posts
+         'posts_per_page' => -1, 
      );
  
      $query = new WP_Query($args);
@@ -730,17 +508,14 @@ foreach ($orders as $order){
                 $total_expense_amount += floatval($expense_amount);
              }
 
-            
          }
      }
- 
-     // Restore original post data
-     wp_reset_postdata();
+
+      wp_reset_postdata();
       return $total_expense_amount;
+
  }
  
-
-
 
 
 //  total product stock sell value 
@@ -759,7 +534,6 @@ foreach ($orders as $order){
               $product_id = get_the_ID();
               $available_stock = get_post_meta(get_the_ID(), '_stock', true);
               $product_price = get_post_meta($product_id, '_price', true);
-
               $available_stock = isset($available_stock) ? intval($available_stock) : 0; // Convert to integer and set to 0 if not set
               $product_price = isset($product_price) ? floatval($product_price) : 0.0; // Convert to float and set to 0.0 if not set
 
@@ -794,19 +568,13 @@ function total_stock_purchase_value(){
           while ($products->have_posts()) : $products->the_post();
               $product_id = get_the_ID();
               $available_stock = get_post_meta(get_the_ID(), '_stock', true);
-              // $product_price = get_post_meta($product_id, '_price', true);
               $purchase_price = get_post_meta(get_the_ID(), '_purchase_price', true) ; 
-
-
               $available_stock = isset($available_stock) ? intval($available_stock) : 0; // Convert to integer and set to 0 if not set
               $purchase_price = isset($purchase_price) ? floatval($purchase_price) : 0.0; // Convert to float and set to 0.0 if not set
-
 
               // Perform the calculation
               $total_purchase_value = $available_stock * $purchase_price;
 
-              // echo '<pre>' ; 
-              // print_r(get_the_title($product_id).'stock '.$purchase_price) ; 
               $total_stock_purchase_value += $total_purchase_value ;
 
           endwhile;
@@ -817,4 +585,5 @@ function total_stock_purchase_value(){
       return $total_stock_purchase_value; 
 
 }
+
 
