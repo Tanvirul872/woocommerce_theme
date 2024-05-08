@@ -68,12 +68,17 @@
           <?php echo strip_tags( wc_price(calculate_total_expense_current_month() ) ) ; ?> 
        </a>
     </div>
+
     <div class="report_items">
-       <a href="#">Sell Profit <br>
-       <?php  //echo strip_tags( wc_price(calculate_total_sellprofit_current_month() ) ) ; ?>
-          <?php // echo calculate_total_sellprofit_current_month() ; ?> 
-      </a>
+
+
+
+       <a href="#"> Sell Profit <br>
+             In progress ... 
+       </a>
     </div>
+
+  
 </div>
 
 
