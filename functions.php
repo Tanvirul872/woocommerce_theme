@@ -80,6 +80,7 @@ require_once('functions/metabox.php');
 require_once('functions/ajax-actions.php');
 require_once('functions/create-database.php');
 require_once('functions/woocommerce-functions.php');
+require_once('functions/woocommerce-functions-kamrul.php');
 
 
 

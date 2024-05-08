@@ -666,6 +666,62 @@ function get_monthly_purchase_cost() {
 
 
 
+
+
+
+function calculate_total_sellprofit_current_month() {
+  
+
+  // Get the current month and year
+  $current_month = date('m');
+  $current_year = date('Y');
+
+  // Calculate the first and last day of the current month
+  $first_day_of_month = date('Y-m-01', strtotime("$current_year-$current_month-01"));
+  $last_day_of_month = date('Y-m-t', strtotime("$current_year-$current_month-01"));
+
+  // Get orders for the current month
+  $orders = wc_get_orders( array(
+      'date_paid' => array(
+          'after'     => $first_day_of_month,
+          'before'    => $last_day_of_month,
+          'inclusive' => true,
+      ),
+  ) );
+
+  $total_sell_profit = 0;
+
+  // Loop through each order and calculate sell profit
+  foreach ($orders as $order) {
+      global $wpdb; 
+      $table_name = $wpdb->prefix . 'woocommerce_order_items';
+      $order_id = $order->get_id(); // Updated from $order->id which is deprecated
+
+      $query = $wpdb->prepare(
+          "SELECT * FROM $table_name WHERE order_id = %d",
+          $order_id
+      ); 
+
+      $results = $wpdb->get_results( $query );
+
+      if ( $results ) {
+          foreach ( $results as $result ) {
+              $product_profit = $result->product_profit;
+              $quantity_ordered = $result->quantity_ordered; // Corrected variable name
+              $sell_profit = $product_profit * $quantity_ordered;
+              $total_sell_profit += $sell_profit; 
+          }
+      } 
+  }
+
+  return $total_sell_profit; 
+
+
+}
+
+
+
+
 function calculate_total_expense_current_month() {
   // Get current month and year
   $current_month = date('m');
@@ -708,3 +764,13 @@ function calculate_total_expense_current_month() {
 
   return $total_expense_amount;
 }
+
+
+
+
+
+
+
+
+
+
